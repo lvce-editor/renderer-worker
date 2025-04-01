@@ -3,7 +3,7 @@
   "include": [],
   "references": [
     {
-      "path": "./packages/file-search-worker"
+      "path": "./packages/renderer-worker"
     },
     {
       "path": "./packages/build"
