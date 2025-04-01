@@ -1,5 +1,20 @@
 import * as ViewletMain from './ViewletMain.js'
 import * as ViewletMainOpenUri from './ViewletMainOpenUri.ts'
+import * as ViewletMainCloseTabsLeft from './ViewletMainCloseTabsLeft.ts'
+import * as ViewletMainCloseTabsRight from './ViewletMainCloseTabsRight.ts'
+import * as ViewletMainCloseOthers from './ViewletMainCloseOthers.ts'
+import * as ViewletMainCloseAllEditors from './ViewletMainCloseAllEditors.ts'
+import * as ViewletMainCloseActiveEditor from './ViewletMainCloseActiveEditor.ts'
+import * as ViewletMainCloseEditor from './ViewletMainCloseEditor.ts'
+import * as ViewletMainFocusIndex from './ViewletMainFocusIndex.js'
+import * as ViewletMainHandleDropFilePath from './ViewletMainHandleDropFilePath.js'
+import * as ViewletMainSplitRight from './ViewletMainSplitRight.ts'
+import * as ViewletMainHandleTabsWheel from './ViewletMainHandleTabsWheel.js'
+import * as ViewletMainHandleTabClick from './ViewletMainFocusIndex.js'
+import * as ViewletMainHandleTabsPointerOver from './ViewletMainHandleTabsPointerOver.js'
+import * as ViewletMainHandleTabsPointerOut from './ViewletMainHandleTabsPointerOut.js'
+import * as ViewletMainHandleContextMenu from './ViewletMainHandleContextMenu.js'
+import * as ViewletMainFindFileReferences from './ViewletMainFindFileReferences.js'
 
 export const Commands = {
   focus: ViewletMain.focus,
@@ -12,6 +27,12 @@ export const Commands = {
   handleClickClose: ViewletMain.handleClickClose,
   reopenEditorWith: ViewletMain.reopenEditorWith,
   openKeyBindings: ViewletMain.openKeyBindings,
+  handleTabsWheel: ViewletMainHandleTabsWheel.handleTabsWheel,
+  handleTabClick: ViewletMainHandleTabClick.handleTabClick,
+  handleTabsPointerOver: ViewletMainHandleTabsPointerOver.handleTabsPointerOver,
+  handleTabsPointerOut: ViewletMainHandleTabsPointerOut.handleTabsPointerOut,
+  handleContextMenu: ViewletMainHandleContextMenu.handleContextMenu,
+  findFileReferences: ViewletMainFindFileReferences.findFileReferences,
 }
 
 export const CommandsWithSideEffects = {
@@ -19,29 +40,21 @@ export const CommandsWithSideEffects = {
   handleDrop: ViewletMain.handleDrop,
   handleTabDrop: ViewletMain.handleTabDrop,
   handleTabsDragOver: ViewletMain.handleTabsDragOver,
+  closeTabsLeft: ViewletMainCloseTabsLeft.closeTabsLeft,
+  closeTabsRight: ViewletMainCloseTabsRight.closeTabsRight,
+  closeOthers: ViewletMainCloseOthers.closeOthers,
+  closeAllEditors: ViewletMainCloseAllEditors.closeAllEditors,
+  closeActiveEditor: ViewletMainCloseActiveEditor.closeActiveEditor,
+  closeFocusedTab: ViewletMainCloseActiveEditor.closeFocusedTab,
+  closeEditor: ViewletMainCloseEditor.closeEditor,
+  focusFirst: ViewletMainFocusIndex.focusFirst,
+  focusLast: ViewletMainFocusIndex.focusLast,
+  focusNext: ViewletMainFocusIndex.focusNext,
+  focusPrevious: ViewletMainFocusIndex.focusPrevious,
+  handleDropFilePath: ViewletMainHandleDropFilePath.handleDropFilePath,
+  splitRight: ViewletMainSplitRight.splitRight,
 }
 
-export const CommandsWithSideEffectsLazy = {
-  closeTabsLeft: () => import('./ViewletMainCloseTabsLeft.ts'),
-  closeTabsRight: () => import('./ViewletMainCloseTabsRight.ts'),
-  closeOthers: () => import('./ViewletMainCloseOthers.ts'),
-  closeAllEditors: () => import('./ViewletMainCloseAllEditors.ts'),
-  closeActiveEditor: () => import('./ViewletMainCloseActiveEditor.ts'),
-  closeFocusedTab: () => import('./ViewletMainCloseActiveEditor.ts'),
-  closeEditor: () => import('./ViewletMainCloseEditor.ts'),
-  focusFirst: () => import('./ViewletMainFocusIndex.js'),
-  focusLast: () => import('./ViewletMainFocusIndex.js'),
-  focusNext: () => import('./ViewletMainFocusIndex.js'),
-  focusPrevious: () => import('./ViewletMainFocusIndex.js'),
-  handleDropFilePath: () => import('./ViewletMainHandleDropFilePath.js'),
-  splitRight: () => import('./ViewletMainSplitRight.ts'),
-}
+export const CommandsWithSideEffectsLazy = {}
 
-export const LazyCommands = {
-  handleTabsWheel: () => import('./ViewletMainHandleTabsWheel.js'),
-  handleTabClick: () => import('./ViewletMainFocusIndex.js'),
-  handleTabsPointerOver: () => import('./ViewletMainHandleTabsPointerOver.js'),
-  handleTabsPointerOut: () => import('./ViewletMainHandleTabsPointerOut.js'),
-  handleContextMenu: () => import('./ViewletMainHandleContextMenu.js'),
-  findFileReferences: () => import('./ViewletMainFindFileReferences.js'),
-}
+export const LazyCommands = {}
