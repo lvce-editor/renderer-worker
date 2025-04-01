@@ -1,20 +1,19 @@
 import * as GetData from '../GetData/GetData.js'
+import * as GetPortTuple from '../GetPortTuple/GetPortTuple.js'
+import * as IpcParentWithWebSocket from '../IpcParentWithWebSocket/IpcParentWithWebSocket.js'
 import * as Platform from '../Platform/Platform.js'
 import * as PlatformType from '../PlatformType/PlatformType.js'
 import * as SendMessagePortToElectron from '../SendMessagePortToElectron/SendMessagePortToElectron.js'
-import * as GetPortTuple from '../GetPortTuple/GetPortTuple.js'
 
 export const create = async (options) => {
   switch (Platform.platform) {
     case PlatformType.Web:
     case PlatformType.Remote:
-      const module = await import('../IpcParentWithWebSocket/IpcParentWithWebSocket.js')
-      const rawIpc = await module.create(options)
+      const module = await IpcParentWithWebSocket.create(options)
       if (options.raw) {
-        return rawIpc
+        return module
       }
       return {
-        rawIpc,
         module,
       }
     case PlatformType.Electron:
@@ -58,4 +57,8 @@ export const wrap = (port) => {
       this.port.postMessage(message, transfer)
     },
   }
+}
+
+export const getModule = () => {
+  return IpcParentWithWebSocket
 }
