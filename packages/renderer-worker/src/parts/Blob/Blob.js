@@ -1,10 +1,9 @@
-// @ts-ignore
-import * as BlobUtil from '../../../../../static/js/blob-util.js'
 import * as NormalizeBlobError from '../NormalizeBlobError/NormalizeBlobError.js'
 import { VError } from '../VError/VError.js'
 
 export const base64StringToBlob = (base64String) => {
   try {
+    // @ts-ignore
     return BlobUtil.base64StringToBlob(base64String)
   } catch (error) {
     const normalizedError = NormalizeBlobError.normalizeBlobError(error)
@@ -14,6 +13,7 @@ export const base64StringToBlob = (base64String) => {
 
 export const binaryStringToBlob = async (string, type) => {
   try {
+    // @ts-ignore
     return await BlobUtil.binaryStringToBlob(string, type)
   } catch (error) {
     const normalizedError = NormalizeBlobError.normalizeBlobError(error)
@@ -23,6 +23,7 @@ export const binaryStringToBlob = async (string, type) => {
 
 export const blobToBinaryString = async (blob) => {
   try {
+    // @ts-ignore
     return await BlobUtil.blobToBinaryString(blob)
   } catch (error) {
     const normalizedError = NormalizeBlobError.normalizeBlobError(error)
