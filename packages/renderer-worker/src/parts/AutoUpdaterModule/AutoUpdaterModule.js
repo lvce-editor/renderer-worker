@@ -1,13 +1,16 @@
 import * as AutoUpdateType from '../AutoUpdateType/AutoUpdateType.js'
+import * as AutoUpdaterAppImage from '../AutoUpdaterAppImage/AutoUpdaterAppImage.js'
+import * as AutoUpdaterNsis from '../AutoUpdaterNsis/AutoUpdaterNsis.js'
+import * as AutoUpdaterDeb from '../AutoUpdaterDeb/AutoUpdaterDeb.js'
 
 export const getModule = (type) => {
   switch (type) {
     case AutoUpdateType.AppImage:
-      return import('../AutoUpdaterAppImage/AutoUpdaterAppImage.js')
+      return AutoUpdaterAppImage
     case AutoUpdateType.WindowsNsis:
-      return import('../AutoUpdaterNsis/AutoUpdaterNsis.js')
+      return AutoUpdaterNsis
     case AutoUpdateType.Deb:
-      return import('../AutoUpdaterDeb/AutoUpdaterDeb.js')
+      return AutoUpdaterDeb
     default:
       return undefined
   }

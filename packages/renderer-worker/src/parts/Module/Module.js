@@ -7,6 +7,38 @@ import * as GetEditorSourceActions from '../GetEditorSourceActions/GetEditorSour
 import * as Blob from '../Blob/Blob.ipc.js'
 import * as BulkReplacement from '../BulkReplacement/BulkReplacement.ipc.js'
 import * as CacheStorage from '../CacheStorage/CacheStorage.ipc.js'
+import * as Callback from '../Callback/Callback.ipc.js'
+import * as Chrome from '../Chrome/Chrome.ipc.js'
+import * as ClipBoard from '../ClipBoard/ClipBoard.ipc.js'
+import * as ColorTheme from '../ColorTheme/ColorTheme.ipc.js'
+import * as ConfirmPrompt from '../ConfirmPrompt/ConfirmPrompt.ipc.js'
+import * as ContentTracing from '../ContentTracing/ContentTracing.ipc.js'
+import * as ContextMenu from '../ContextMenu/ContextMenu.ipc.js'
+import * as Debug from '../Debug/Debug.ipc.js'
+import * as DebugSharedProcess from '../DebugSharedProcess/DebugSharedProcess.ipc.js'
+import * as Developer from '../Developer/Developer.ipc.js'
+import * as Dialog from '../Dialog/Dialog.ipc.js'
+import * as Download from '../Download/Download.ipc.js'
+import * as EditorDiagnostics from '../EditorDiagnostics/EditorDiagnostics.ipc.js'
+import * as EditorError from '../EditorError/EditorError.ipc.js'
+import * as ElectronApplicationMenu from '../ElectronApplicationMenu/ElectronApplicationMenu.ipc.js'
+import * as ElectronBrowserView from '../ElectronBrowserView/ElectronBrowserView.ipc.js'
+import * as ElectronClipBoard from '../ElectronClipBoard/ElectronClipBoard.ipc.js'
+import * as ElectronContextMenu from '../ElectronContextMenu/ElectronContextMenu.ipc.js'
+import * as ElectronWindow from '../ElectronWindow/ElectronWindow.ipc.js'
+import * as ErrorHandling from '../ErrorHandling/ErrorHandling.ipc.js'
+import * as Exit from '../Exit/Exit.ipc.js'
+import * as ExtensionHostCore from '../ExtensionHost/ExtensionHostCore.ipc.js'
+import * as ExtensionMeta from '../ExtensionMeta/ExtensionMeta.ipc.js'
+import * as Extensions from '../Extensions/Extensions.ipc.js'
+import * as FilePicker from '../FilePicker/FilePicker.ipc.js'
+import * as FileSystem from '../FileSystem/FileSystem.ipc.js'
+import * as IconTheme from '../IconTheme/IconTheme.ipc.js'
+import * as ImagePreview from '../ImagePreview/ImagePreview.ipc.js'
+import * as Focus from '../Focus/Focus.ipc.js'
+import * as IncrementalTextSearch from '../IncrementalTextSearch/IncrementalTextSearch.ipc.js'
+import * as IndexedDb from '../IndexedDb/IndexedDb.ipc.js'
+import * as IpcParent from '../IpcParent/IpcParent.ipc.js'
 
 export const load = (moduleId) => {
   switch (moduleId) {
@@ -27,69 +59,69 @@ export const load = (moduleId) => {
     case ModuleId.CacheStorage:
       return CacheStorage
     case ModuleId.Callback:
-      return import('../Callback/Callback.ipc.js')
+      return Callback
     case ModuleId.Chrome:
-      return import('../Chrome/Chrome.ipc.js')
+      return Chrome
     case ModuleId.ClipBoard:
-      return import('../ClipBoard/ClipBoard.ipc.js')
+      return ClipBoard
     case ModuleId.ColorTheme:
-      return import('../ColorTheme/ColorTheme.ipc.js')
+      return ColorTheme
     case ModuleId.ConfirmPrompt:
-      return import('../ConfirmPrompt/ConfirmPrompt.ipc.js')
+      return ConfirmPrompt
     case ModuleId.ContentTracing:
-      return import('../ContentTracing/ContentTracing.ipc.js')
+      return ContentTracing
     case ModuleId.ContextMenu:
-      return import('../ContextMenu/ContextMenu.ipc.js')
+      return ContextMenu
     case ModuleId.Debug:
-      return import('../Debug/Debug.ipc.js')
+      return Debug
     case ModuleId.DebugSharedProcess:
-      return import('../DebugSharedProcess/DebugSharedProcess.ipc.js')
+      return DebugSharedProcess
     case ModuleId.Developer:
-      return import('../Developer/Developer.ipc.js')
+      return Developer
     case ModuleId.Dialog:
-      return import('../Dialog/Dialog.ipc.js')
+      return Dialog
     case ModuleId.Download:
-      return import('../Download/Download.ipc.js')
+      return Download
     case ModuleId.EditorDiagnostics:
-      return import('../EditorDiagnostics/EditorDiagnostics.ipc.js')
+      return EditorDiagnostics
     case ModuleId.EditorError:
-      return import('../EditorError/EditorError.ipc.js')
+      return EditorError
     case ModuleId.ElectronApplicationMenu:
-      return import('../ElectronApplicationMenu/ElectronApplicationMenu.ipc.js')
+      return ElectronApplicationMenu
     case ModuleId.ElectronBrowserView:
-      return import('../ElectronBrowserView/ElectronBrowserView.ipc.js')
+      return ElectronBrowserView
     case ModuleId.ElectronClipBoard:
-      return import('../ElectronClipBoard/ElectronClipBoard.ipc.js')
+      return ElectronClipBoard
     case ModuleId.ElectronContextMenu:
-      return import('../ElectronContextMenu/ElectronContextMenu.ipc.js')
+      return ElectronContextMenu
     case ModuleId.ElectronWindow:
-      return import('../ElectronWindow/ElectronWindow.ipc.js')
+      return ElectronWindow
     case ModuleId.ErrorHandling:
-      return import('../ErrorHandling/ErrorHandling.ipc.js')
+      return ErrorHandling
     case ModuleId.Exit:
-      return import('../Exit/Exit.ipc.js')
+      return Exit
     case ModuleId.ExtensionHostCode:
-      return import('../ExtensionHost/ExtensionHostCore.ipc.js')
+      return ExtensionHostCore
     case ModuleId.ExtensionMeta:
-      return import('../ExtensionMeta/ExtensionMeta.ipc.js')
+      return ExtensionMeta
     case ModuleId.Extensions:
-      return import('../Extensions/Extensions.ipc.js')
+      return Extensions
     case ModuleId.FilePicker:
-      return import('../FilePicker/FilePicker.ipc.js')
+      return FilePicker
     case ModuleId.FileSystem:
-      return import('../FileSystem/FileSystem.ipc.js')
+      return FileSystem
     case ModuleId.IconTheme:
-      return import('../IconTheme/IconTheme.ipc.js')
+      return IconTheme
     case ModuleId.ImagePreview:
-      return import('../ImagePreview/ImagePreview.ipc.js')
+      return ImagePreview
     case ModuleId.Focus:
-      return import('../Focus/Focus.ipc.js')
+      return Focus
     case ModuleId.IncrementalTextSearch:
-      return import('../IncrementalTextSearch/IncrementalTextSearch.ipc.js')
+      return IncrementalTextSearch
     case ModuleId.IndexedDb:
-      return import('../IndexedDb/IndexedDb.ipc.js')
+      return IndexedDb
     case ModuleId.IpcParent:
-      return import('../IpcParent/IpcParent.ipc.js')
+      return IpcParent
     case ModuleId.KeyBindings:
       return import('../KeyBindings/KeyBindings.ipc.js')
     case ModuleId.KeyBindingsInitial:

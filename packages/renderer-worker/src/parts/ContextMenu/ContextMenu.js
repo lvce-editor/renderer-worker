@@ -1,24 +1,17 @@
-import * as Assert from '../Assert/Assert.ts'
 import * as Platform from '../Platform/Platform.js'
 import * as PlatformType from '../PlatformType/PlatformType.js'
-import * as Preferences from '../Preferences/Preferences.js'
-
-const hasContextMenuNativePreference = () => {
-  const value = Preferences.get('window.titleBarStyle')
-  return value === 'native'
-}
+import * as ContextMenuElectron from './ContextMenuElectron.js'
+import * as ContextMenuBrowser from './ContextMenuBrowser.js'
+import * as HasContextMenuNativePreference from '../HasContextMenuNativePreference/HasContextMenuNativePreference.js'
 
 const getModule = () => {
-  if (Platform.platform === PlatformType.Electron && hasContextMenuNativePreference()) {
-    return import('./ContextMenuElectron.js')
+  if (Platform.platform === PlatformType.Electron && HasContextMenuNativePreference.hasContextMenuNativePreference()) {
+    return ContextMenuElectron
   }
-  return import('./ContextMenuBrowser.js')
+  return ContextMenuBrowser
 }
 
 export const show = async (x, y, id, ...args) => {
-  Assert.number(x)
-  Assert.number(y)
-  Assert.number(id)
-  const module = await getModule()
+  const module = getModule()
   return module.show(x, y, id, ...args)
 }
