@@ -1,9 +1,7 @@
-import * as ModuleId from '../ModuleId/ModuleId.js'
 import * as About from '../About/About.ipc.js'
 import * as Ajax from '../Ajax/Ajax.ipc.js'
 import * as Audio from '../Audio/Audio.ipc.js'
 import * as AutoUpdater from '../AutoUpdater/AutoUpdater.ipc.js'
-import * as GetEditorSourceActions from '../GetEditorSourceActions/GetEditorSourceActions.ipc.js'
 import * as Blob from '../Blob/Blob.ipc.js'
 import * as BulkReplacement from '../BulkReplacement/BulkReplacement.ipc.js'
 import * as CacheStorage from '../CacheStorage/CacheStorage.ipc.js'
@@ -25,20 +23,81 @@ import * as ElectronApplicationMenu from '../ElectronApplicationMenu/ElectronApp
 import * as ElectronBrowserView from '../ElectronBrowserView/ElectronBrowserView.ipc.js'
 import * as ElectronClipBoard from '../ElectronClipBoard/ElectronClipBoard.ipc.js'
 import * as ElectronContextMenu from '../ElectronContextMenu/ElectronContextMenu.ipc.js'
+import * as ElectronDialog from '../ElectronDialog/ElectronDialog.ipc.js'
 import * as ElectronWindow from '../ElectronWindow/ElectronWindow.ipc.js'
 import * as ErrorHandling from '../ErrorHandling/ErrorHandling.ipc.js'
 import * as Exit from '../Exit/Exit.ipc.js'
+import * as ExtensionHostBraceCompletion from '../ExtensionHost/ExtensionHostBraceCompletion.ipc.js'
+import * as ExtensionHostClosingTag from '../ExtensionHost/ExtensionHostClosingTagCompletion.ipc.js'
 import * as ExtensionHostCore from '../ExtensionHost/ExtensionHostCore.ipc.js'
+import * as ExtensionHostDefinition from '../ExtensionHost/ExtensionHostDefinition.ipc.js'
+import * as ExtensionHostDialog from '../ExtensionHost/ExtensionHostDialog.ipc.js'
+import * as ExtensionHostHover from '../ExtensionHost/ExtensionHostHover.ipc.js'
+import * as ExtensionHostOrganizeImports from '../ExtensionHost/ExtensionHostOrganizeImports.ipc.js'
+import * as ExtensionHostQuickPick from '../ExtensionHost/ExtensionHostQuickPick.ipc.js'
+import * as ExtensionHostSelection from '../ExtensionHost/ExtensionHostSelection.ipc.js'
+import * as ExtensionHostTabCompletion from '../ExtensionHost/ExtensionHostTabCompletion.ipc.js'
+import * as ExtensionHostTextSearch from '../ExtensionHost/ExtensionHostTextSearch.ipc.js'
+import * as ExtensionHostTypeDefinition from '../ExtensionHost/ExtensionHostTypeDefinition.ipc.js'
+import * as ExtensionHostWorkerContentSecurityPolicy from '../ExtensionHost/ExtensionHostWorkerContentSecurityPolicy.ipc.js'
+import * as ExtensionHostManagement from '../ExtensionHostManagement/ExtensionHostManagement.ipc.js'
+import * as ExtensionManagement from '../ExtensionManagement/ExtensionManagement.ipc.js'
 import * as ExtensionMeta from '../ExtensionMeta/ExtensionMeta.ipc.js'
 import * as Extensions from '../Extensions/Extensions.ipc.js'
+import * as ExtensionStateStorage from '../ExtensionStateStorage/ExtensionStateStorage.js'
 import * as FilePicker from '../FilePicker/FilePicker.ipc.js'
 import * as FileSystem from '../FileSystem/FileSystem.ipc.js'
+import * as FileWatcher from '../FileWatcher/FileWatcher.ipc.js'
+import * as Focus from '../Focus/Focus.ipc.js'
+import * as GetEditorSourceActions from '../GetEditorSourceActions/GetEditorSourceActions.ipc.js'
+import * as GetWindowId from '../GetWindowId/GetWindowId.ipc.js'
 import * as IconTheme from '../IconTheme/IconTheme.ipc.js'
 import * as ImagePreview from '../ImagePreview/ImagePreview.ipc.js'
-import * as Focus from '../Focus/Focus.ipc.js'
 import * as IncrementalTextSearch from '../IncrementalTextSearch/IncrementalTextSearch.ipc.js'
 import * as IndexedDb from '../IndexedDb/IndexedDb.ipc.js'
 import * as IpcParent from '../IpcParent/IpcParent.ipc.js'
+import * as KeyBindings from '../KeyBindings/KeyBindings.ipc.js'
+import * as KeyBindingsInitial from '../KeyBindingsInitial/KeyBindingsInitial.ipc.js'
+import * as Languages from '../Languages/Languages.ipc.js'
+import * as Listener from '../Listener/Listener.ipc.js'
+import * as LocalStorage from '../LocalStorage/LocalStorage.ipc.js'
+import * as Markdown from '../Markdown/Markdown.ipc.js'
+import * as Menu from '../Menu/Menu.ipc.js'
+import * as Mime from '../Mime/Mime.ipc.js'
+import * as ModuleId from '../ModuleId/ModuleId.js'
+import * as NativeHost from '../NativeHost/NativeHost.ipc.js'
+import * as Navigation from '../Navigation/Navigation.ipc.js'
+import * as Notification from '../Notification/Notification.ipc.js'
+import * as OffscreenCanvas from '../OffscreenCanvas/OffscreenCanvas.ipc.js'
+import * as Open from '../Open/Open.ipc.js'
+import * as OpenNativeFolder from '../OpenNativeFolder/OpenNativeFolder.ipc.js'
+import * as PersistentFileHandle from '../PersistentFileHandle/PersistentFileHandle.ipc.js'
+import * as PointerCapture from '../PointerCapture/PointerCapture.ipc.js'
+import * as Preferences from '../Preferences/Preferences.ipc.js'
+import * as Process from '../Process/Process.ipc.js'
+import * as Prompt from '../Prompt/Prompt.ipc.js'
+import * as QuickPick from '../QuickPick/QuickPick.ipc.js'
+import * as RebuildNodePty from '../RebuildNodePty/RebuildNodePty.ipc.js'
+import * as RecentlyOpened from '../RecentlyOpened/RecentlyOpened.ipc.js'
+import * as Reload from '../Reload/Reload.ipc.js'
+import * as SaveFileAs from '../SaveFileAs/SaveFileAs.ipc.js'
+import * as SaveState from '../SaveState/SaveState.ipc.js'
+import * as SearchProcess from '../SearchProcess/SearchProcess.ipc.js'
+import * as SendMessagePortToElectron from '../SendMessagePortToElectron/SendMessagePortToElectron.ipc.js'
+import * as SendMessagePortToExtensionHostWorker from '../SendMessagePortToExtensionHostWorker/SendMessagePortToExtensionHostWorker.ipc.js'
+import * as SendMessagePortToRendererProcess from '../SendMessagePortToRendererProcess/SendMessagePortToRendererProcess.ipc.js'
+import * as SendMessagePortToSyntaxHighlightingWorker from '../SendMessagePortToSyntaxHighlightingworker/SendMessagePortToSyntaxHighlightingWorker.ipc.js'
+import * as SessionReplay from '../SessionReplay/SessionReplay.ipc.js'
+import * as SessionStorage from '../SessionStorage/SessionStorage.ipc.js'
+import * as Test from '../Test/Test.ipc.js'
+import * as TestFrameWork from '../TestFrameWork/TestFrameWork.ipc.js'
+import * as Transferrable from '../Transferrable/Transferrable.ipc.js'
+import * as Url from '../Url/Url.ipc.js'
+import * as Viewlet from '../Viewlet/Viewlet.ipc.js'
+import * as WebView from '../WebView/WebView.ipc.ts'
+import * as Window from '../Window/Window.ipc.js'
+import * as WindowTitle from '../WindowTitle/WindowTitle.ipc.js'
+import * as Workspace from '../Workspace/Workspace.ipc.js'
 
 export const load = (moduleId) => {
   switch (moduleId) {
@@ -123,124 +182,123 @@ export const load = (moduleId) => {
     case ModuleId.IpcParent:
       return IpcParent
     case ModuleId.KeyBindings:
-      return import('../KeyBindings/KeyBindings.ipc.js')
+      return KeyBindings
     case ModuleId.KeyBindingsInitial:
-      return import('../KeyBindingsInitial/KeyBindingsInitial.ipc.js')
+      return KeyBindingsInitial
     case ModuleId.Listener:
-      return import('../Listener/Listener.ipc.js')
+      return Listener
     case ModuleId.LocalStorage:
-      return import('../LocalStorage/LocalStorage.ipc.js')
+      return LocalStorage
     case ModuleId.Menu:
-      return import('../Menu/Menu.ipc.js')
+      return Menu
     case ModuleId.Mime:
-      return import('../Mime/Mime.ipc.js')
+      return Mime
     case ModuleId.NativeHost:
-      return import('../NativeHost/NativeHost.ipc.js')
+      return NativeHost
     case ModuleId.Navigation:
-      return import('../Navigation/Navigation.ipc.js')
+      return Navigation
     case ModuleId.Notification:
-      return import('../Notification/Notification.ipc.js')
+      return Notification
     case ModuleId.Open:
-      return import('../Open/Open.ipc.js')
+      return Open
     case ModuleId.OpenNativeFolder:
-      return import('../OpenNativeFolder/OpenNativeFolder.ipc.js')
+      return OpenNativeFolder
     case ModuleId.PersistentFileHandle:
-      return import('../PersistentFileHandle/PersistentFileHandle.ipc.js')
+      return PersistentFileHandle
     case ModuleId.Preferences:
-      return import('../Preferences/Preferences.ipc.js')
+      return Preferences
     case ModuleId.Prompt:
-      return import('../Prompt/Prompt.ipc.js')
+      return Prompt
     case ModuleId.RebuildNodePty:
-      return import('../RebuildNodePty/RebuildNodePty.ipc.js')
+      return RebuildNodePty
     case ModuleId.RecentlyOpened:
-      return import('../RecentlyOpened/RecentlyOpened.ipc.js')
+      return RecentlyOpened
     case ModuleId.Reload:
-      return import('../Reload/Reload.ipc.js')
+      return Reload
     case ModuleId.SaveFileAs:
-      return import('../SaveFileAs/SaveFileAs.ipc.js')
+      return SaveFileAs
     case ModuleId.SaveState:
-      return import('../SaveState/SaveState.ipc.js')
+      return SaveState
     case ModuleId.SessionReplay:
-      return import('../SessionReplay/SessionReplay.ipc.js')
+      return SessionReplay
     case ModuleId.SessionStorage:
-      return import('../SessionStorage/SessionStorage.ipc.js')
+      return SessionStorage
     case ModuleId.Test:
-      return import('../Test/Test.ipc.js')
+      return Test
     case ModuleId.TestFrameWork:
-      return import('../TestFrameWork/TestFrameWork.ipc.js')
+      return TestFrameWork
     case ModuleId.Url:
-      return import('../Url/Url.ipc.js')
+      return Url
     case ModuleId.Viewlet:
-      return import('../Viewlet/Viewlet.ipc.js')
+      return Viewlet
     case ModuleId.Window:
-      return import('../Window/Window.ipc.js')
+      return Window
     case ModuleId.Workspace:
-      return import('../Workspace/Workspace.ipc.js')
+      return Workspace
     case ModuleId.WindowTitle:
-      return import('../WindowTitle/WindowTitle.ipc.js')
+      return WindowTitle
     case ModuleId.PointerCapture:
-      return import('../PointerCapture/PointerCapture.ipc.js')
+      return PointerCapture
     case ModuleId.QuickPick:
-      return import('../QuickPick/QuickPick.ipc.js')
+      return QuickPick
     case ModuleId.ExtensionHostQuickPick:
-      return import('../ExtensionHost/ExtensionHostQuickPick.ipc.js')
+      return ExtensionHostQuickPick
     case ModuleId.ExtensionHostDialog:
-      return import('../ExtensionHost/ExtensionHostDialog.ipc.js')
+      return ExtensionHostDialog
     case ModuleId.ExtensionHostWorkerContentSecurityPolicy:
-      return import('../ExtensionHost/ExtensionHostWorkerContentSecurityPolicy.ipc.js')
+      return ExtensionHostWorkerContentSecurityPolicy
     case ModuleId.SendMessagePortToElectron:
-      return import('../SendMessagePortToElectron/SendMessagePortToElectron.ipc.js')
+      return SendMessagePortToElectron
     case ModuleId.OffscreenCanvas:
-      return import('../OffscreenCanvas/OffscreenCanvas.ipc.js')
+      return OffscreenCanvas
     case ModuleId.Languages:
-      return import('../Languages/Languages.ipc.js')
+      return Languages
     case ModuleId.FileWatcher:
-      return import('../FileWatcher/FileWatcher.ipc.js')
+      return FileWatcher
     case ModuleId.ExtensionHostSelection:
-      return import('../ExtensionHost/ExtensionHostSelection.ipc.js')
+      return ExtensionHostSelection
     case ModuleId.ExtensionHostBraceCompletion:
-      return import('../ExtensionHost/ExtensionHostBraceCompletion.ipc.js')
+      return ExtensionHostBraceCompletion
     case ModuleId.ExtensionHostDefinition:
-      return import('../ExtensionHost/ExtensionHostDefinition.ipc.js')
+      return ExtensionHostDefinition
     case ModuleId.ExtensionHostTypeDefinition:
-      return import('../ExtensionHost/ExtensionHostTypeDefinition.ipc.js')
+      return ExtensionHostTypeDefinition
     case ModuleId.ExtensionHostOrganizeImports:
-      return import('../ExtensionHost/ExtensionHostOrganizeImports.ipc.js')
+      return ExtensionHostOrganizeImports
     case ModuleId.ExtensionHostTabCompletion:
-      return import('../ExtensionHost/ExtensionHostTabCompletion.ipc.js')
+      return ExtensionHostTabCompletion
     case ModuleId.ExtensionHostClosingTag:
-      return import('../ExtensionHost/ExtensionHostClosingTagCompletion.ipc.js')
+      return ExtensionHostClosingTag
     case ModuleId.SendMessagePortToRendererProcess:
-      return import('../SendMessagePortToRendererProcess/SendMessagePortToRendererProcess.ipc.js')
+      return SendMessagePortToRendererProcess
     case ModuleId.ExtensionHostHover:
-      return import('../ExtensionHost/ExtensionHostHover.ipc.js')
+      return ExtensionHostHover
     case ModuleId.SendMessagePortToExtensionHostWorker:
-      return import('../SendMessagePortToExtensionHostWorker/SendMessagePortToExtensionHostWorker.ipc.js')
+      return SendMessagePortToExtensionHostWorker
     case ModuleId.ExtensionHostManagement:
-      return import('../ExtensionHostManagement/ExtensionHostManagement.ipc.js')
+      return ExtensionHostManagement
     case ModuleId.SendMessagePortToSyntaxHighlightingWorker:
-      // TODO move this to transferrable module instead
-      return import('../SendMessagePortToSyntaxHighlightingworker/SendMessagePortToSyntaxHighlightingWorker.ipc.js')
+      return SendMessagePortToSyntaxHighlightingWorker
     case ModuleId.Transferrable:
-      return import('../Transferrable/Transferrable.ipc.js')
+      return Transferrable
     case ModuleId.WebView:
-      return import('../WebView/WebView.ipc.ts')
+      return WebView
     case ModuleId.SearchProcess:
-      return import('../SearchProcess/SearchProcess.ipc.js')
+      return SearchProcess
     case ModuleId.ExtensionHostTextSearch:
-      return import('../ExtensionHost/ExtensionHostTextSearch.ipc.js')
+      return ExtensionHostTextSearch
     case ModuleId.ExtensionStateStorage:
-      return import('../ExtensionStateStorage/ExtensionStateStorage.js')
+      return ExtensionStateStorage
     case ModuleId.GetWindowId:
-      return import('../GetWindowId/GetWindowId.ipc.js')
+      return GetWindowId
     case ModuleId.ElectronDialog:
-      return import('../ElectronDialog/ElectronDialog.ipc.js')
+      return ElectronDialog
     case ModuleId.Process:
-      return import('../Process/Process.ipc.js')
+      return Process
     case ModuleId.ExtensionManagement:
-      return import('../ExtensionManagement/ExtensionManagement.ipc.js')
+      return ExtensionManagement
     case ModuleId.Markdown:
-      return import('../Markdown/Markdown.ipc.js')
+      return Markdown
     default:
       throw new Error(`module ${moduleId} not found`)
   }
