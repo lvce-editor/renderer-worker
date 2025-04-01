@@ -1,20 +1,22 @@
 import * as Platform from '../Platform/Platform.js'
 import * as PlatformType from '../PlatformType/PlatformType.js'
+import * as IpcParentWithWebSocket from '../IpcParentWithWebSocket/IpcParentWithWebSocket.js'
+import * as IpcParentWithElectronMessagePort from '../IpcParentWithElectronMessagePort/IpcParentWithElectronMessagePort.js'
 
 const getModule = () => {
   switch (Platform.platform) {
     case PlatformType.Web:
     case PlatformType.Remote:
-      return import('../IpcParentWithWebSocket/IpcParentWithWebSocket.js')
+      return IpcParentWithWebSocket
     case PlatformType.Electron:
-      return import('../IpcParentWithElectronMessagePort/IpcParentWithElectronMessagePort.js')
+      return IpcParentWithElectronMessagePort
     default:
       throw new Error('unsupported platform')
   }
 }
 
 export const create = async (options) => {
-  const module = await getModule()
+  const module = getModule()
   const rawIpc = await module.create(options)
   if (options.raw) {
     return rawIpc
