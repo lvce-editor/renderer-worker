@@ -17,6 +17,7 @@ const getModule = () => {
   }
 }
 
-export const getProcessExplorer = () => {
-  return getModule()
+export const open = async () => {
+  const module = getModule()
+  return module.open()
 }
