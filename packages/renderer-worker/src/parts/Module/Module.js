@@ -1,23 +1,31 @@
 import * as ModuleId from '../ModuleId/ModuleId.js'
+import * as About from '../About/About.ipc.js'
+import * as Ajax from '../Ajax/Ajax.ipc.js'
+import * as Audio from '../Audio/Audio.ipc.js'
+import * as AutoUpdater from '../AutoUpdater/AutoUpdater.ipc.js'
+import * as GetEditorSourceActions from '../GetEditorSourceActions/GetEditorSourceActions.ipc.js'
+import * as Blob from '../Blob/Blob.ipc.js'
+import * as BulkReplacement from '../BulkReplacement/BulkReplacement.ipc.js'
+import * as CacheStorage from '../CacheStorage/CacheStorage.ipc.js'
 
 export const load = (moduleId) => {
   switch (moduleId) {
     case ModuleId.About:
-      return import('../About/About.ipc.js')
+      return About
     case ModuleId.Ajax:
-      return import('../Ajax/Ajax.ipc.js')
+      return Ajax
     case ModuleId.Audio:
-      return import('../Audio/Audio.ipc.js')
+      return Audio
     case ModuleId.AutoUpdater:
-      return import('../AutoUpdater/AutoUpdater.ipc.js')
+      return AutoUpdater
     case ModuleId.GetEditorSourceActions:
-      return import('../GetEditorSourceActions/GetEditorSourceActions.ipc.js')
+      return GetEditorSourceActions
     case ModuleId.Blob:
-      return import('../Blob/Blob.ipc.js')
+      return Blob
     case ModuleId.BulkReplacement:
-      return import('../BulkReplacement/BulkReplacement.ipc.js')
+      return BulkReplacement
     case ModuleId.CacheStorage:
-      return import('../CacheStorage/CacheStorage.ipc.js')
+      return CacheStorage
     case ModuleId.Callback:
       return import('../Callback/Callback.ipc.js')
     case ModuleId.Chrome:
