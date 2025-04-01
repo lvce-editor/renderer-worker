@@ -43,7 +43,7 @@ test('load - import error', async () => {
   ViewletModuleInternal.load.mockImplementation(() => {
     throw new TypeError('x is not a function')
   })
-  await expect(ViewletModule.load(123)).rejects.toThrow(new TypeError('x is not a function'))
+  await expect(ViewletModule.load(123)).rejects.toThrow(new Error('Failed to load 123 module: x is not a function'))
 })
 
 test('load - syntax error', async () => {
