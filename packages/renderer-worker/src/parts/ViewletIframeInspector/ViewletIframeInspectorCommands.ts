@@ -1,6 +1,6 @@
 import * as IframeInspectorWorker from '../IframeInspectorWorker/IframeInspectorWorker.js'
-import * as WrapIframeInspectorCommand from '../WrapIframeInspectorCommand/WrapIframeInspectorCommand.ts'
 import * as ViewletIframeInspector from '../ViewletIframeInspector/ViewletIframeInspector.ts'
+import * as WrapIframeInspectorCommand from '../WrapIframeInspectorCommand/WrapIframeInspectorCommand.ts'
 
 export const Commands = {}
 

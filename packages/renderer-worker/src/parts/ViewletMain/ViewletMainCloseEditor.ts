@@ -1,7 +1,7 @@
+import type { MainState } from './ViewletMainTypes.ts'
 import * as Assert from '../Assert/Assert.ts'
 import * as Viewlet from '../Viewlet/Viewlet.js'
 import { closeAllEditors } from './ViewletMainCloseAllEditors.ts'
-import type { MainState } from './ViewletMainTypes.ts'
 
 export const closeEditor = (state: MainState, index: number) => {
   Assert.object(state)

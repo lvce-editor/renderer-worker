@@ -1,9 +1,9 @@
+import type { MainState } from './ViewletMainTypes.ts'
 import * as Id from '../Id/Id.js'
 import * as Viewlet from '../Viewlet/Viewlet.js'
 import * as ViewletManager from '../ViewletManager/ViewletManager.js'
 import * as ViewletMap from '../ViewletMap/ViewletMap.js'
 import * as ViewletModule from '../ViewletModule/ViewletModule.js'
-import type { MainState } from './ViewletMainTypes.ts'
 
 export const closeOthers = async (state: MainState) => {
   const commands: any[] = []

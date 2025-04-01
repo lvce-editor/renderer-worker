@@ -1,5 +1,5 @@
-import * as GetNewLineIndex from '../GetNewLineIndex/GetNewLineIndex.js'
 import type { TextEdit } from '../TextEdit/TextEdit.ts'
+import * as GetNewLineIndex from '../GetNewLineIndex/GetNewLineIndex.js'
 
 export const getNewContent = (oldContent: string, changes: readonly TextEdit[]): string => {
   if (changes.length === 0) {

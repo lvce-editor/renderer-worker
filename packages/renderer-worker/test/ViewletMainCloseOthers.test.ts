@@ -1,5 +1,5 @@
 import { beforeEach, expect, jest, test } from '@jest/globals'
-import { MainState } from '../src/parts/ViewletMain/ViewletMainTypes.ts'
+import type { MainState } from '../src/parts/ViewletMain/ViewletMainTypes.ts'
 
 beforeEach(() => {
   jest.resetAllMocks()

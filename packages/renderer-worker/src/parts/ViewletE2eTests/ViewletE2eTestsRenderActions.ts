@@ -1,6 +1,6 @@
+import type { E2eState } from './ViewletE2eTestsTypes.ts'
 import * as GetActionsVirtualDom from '../GetActionsVirtualDom/GetActionsVirtualDom.js'
 import * as ViewletE2eTestsActions from './ViewletE2eTestsActions.ts'
-import { E2eState } from './ViewletE2eTestsTypes.ts'
 
 export const renderActions = {
   isEqual(oldState: E2eState, newState: E2eState) {

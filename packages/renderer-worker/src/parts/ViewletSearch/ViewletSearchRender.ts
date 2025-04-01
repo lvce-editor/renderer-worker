@@ -1,5 +1,5 @@
-import * as TextSearchWorker from '../TextSearchWorker/TextSearchWorker.js'
 import type { SearchState } from './ViewletSearchTypes.ts'
+import * as TextSearchWorker from '../TextSearchWorker/TextSearchWorker.js'
 
 export const hasFunctionalRender = true
 

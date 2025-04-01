@@ -1,6 +1,6 @@
 import type { AboutState } from './ViewletAboutTypes.ts'
-import * as AdjustCommands from '../AdjustCommands/AdjustCommands.js'
 import * as AboutViewWorker from '../AboutViewWorker/AboutViewWorker.js'
+import * as AdjustCommands from '../AdjustCommands/AdjustCommands.js'
 
 export const hasFunctionalRender = true
 

@@ -1,6 +1,6 @@
 import * as ActionType from '../ActionType/ActionType.js'
-import * as TerminalStrings from '../TerminalStrings/TerminalStrings.js'
 import * as Icon from '../Icon/Icon.js'
+import * as TerminalStrings from '../TerminalStrings/TerminalStrings.js'
 
 export const getActions = (state) => {
   return [

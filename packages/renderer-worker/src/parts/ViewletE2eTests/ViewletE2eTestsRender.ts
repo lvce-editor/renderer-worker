@@ -1,6 +1,6 @@
+import type { E2eState } from './ViewletE2eTestsTypes.ts'
 import * as GetE2eTestsVirtualDom from '../GetE2eTestsVirtualDom/GetE2eTestsVirtualDom.ts'
 import * as GetVisibleE2eTests from '../GetVisibleE2eTests/GetVisibleE2eTests.ts'
-import type { E2eState } from './ViewletE2eTestsTypes.ts'
 
 export const hasFunctionalRender = true
 

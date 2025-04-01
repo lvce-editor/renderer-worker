@@ -1,5 +1,5 @@
-import { closeEditor } from './ViewletMainCloseEditor.ts'
 import type { MainState } from './ViewletMainTypes.ts'
+import { closeEditor } from './ViewletMainCloseEditor.ts'
 
 export const closeActiveEditor = (state: MainState) => {
   const { groups, activeGroupIndex } = state
