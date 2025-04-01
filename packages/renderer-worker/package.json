@@ -87,6 +87,7 @@
     "@lvce-editor/editor-worker": "^5.17.0",
     "@lvce-editor/fuzzy-search": "^1.0.0",
     "@lvce-editor/i18n": "^1.1.0",
+    "@lvce-editor/ipc": "^13.7.0",
     "@lvce-editor/json-rpc": "^5.4.0",
     "@lvce-editor/list": "^1.0.0",
     "@lvce-editor/rpc": "^1.23.0",
