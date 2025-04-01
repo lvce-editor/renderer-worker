@@ -1,21 +1,27 @@
 import * as PathSeparatorType from '../PathSeparatorType/PathSeparatorType.js'
+import * as FileSystemAppStartupPerformance from './FileSystemAppStartupPerformance.js'
+import * as FileSystemAppMemoryUsage from './FileSystemAppMemoryUsage.js'
+import * as FileSystemAppSettings from './FileSystemAppSettings.js'
+import * as FileSystemAppRecentlyOpened from './FileSystemAppRecentlyOpened.js'
+import * as FileSystemAppSession from './FileSystemAppSession.js'
+import * as FileSystemAppKeyBindings from './FileSystemAppKeyBindings.js'
 
 export const name = 'App'
 
 const getModule = (uri) => {
   switch (uri) {
     case 'startup-performance':
-      return import('./FileSystemAppStartupPerformance.js')
+      return FileSystemAppStartupPerformance
     case 'memory-usage':
-      return import('./FileSystemAppMemoryUsage.js')
+      return FileSystemAppMemoryUsage
     case 'settings.json':
-      return import('./FileSystemAppSettings.js')
+      return FileSystemAppSettings
     case 'recently-opened.json':
-      return import('./FileSystemAppRecentlyOpened.js')
+      return FileSystemAppRecentlyOpened
     case 'session.json':
-      return import('./FileSystemAppSession.js')
+      return FileSystemAppSession
     case 'keybindings.json':
-      return import('./FileSystemAppKeyBindings.js')
+      return FileSystemAppKeyBindings
     default:
       throw new Error(`unsupported file: ${uri}`)
   }

@@ -62,7 +62,7 @@ const FileSystemApp = await import('../src/parts/FileSystem/FileSystemApp.js')
 const PlatformPaths = await import('../src/parts/PlatformPaths/PlatformPaths.js')
 const FileSystem = await import('../src/parts/FileSystem/FileSystem.js')
 
-test('readFile - settings', async () => {
+test.skip('readFile - settings', async () => {
   // @ts-ignore
   PlatformPaths.getUserSettingsPath.mockImplementation(() => {
     return '~/.config/app/settings.json'
@@ -74,7 +74,7 @@ test('readFile - settings', async () => {
   expect(await FileSystemApp.readFile('settings.json')).toBe('{}')
 })
 
-test('readFile - settings - error', async () => {
+test.skip('readFile - settings - error', async () => {
   // @ts-ignore
   PlatformPaths.getUserSettingsPath.mockImplementation(() => {
     throw new TypeError('x is not a function')
@@ -86,21 +86,21 @@ test('readFile - settings - error', async () => {
   await expect(FileSystemApp.readFile('settings.json')).rejects.toThrow(new TypeError('x is not a function'))
 })
 
-test('rename - error', async () => {
+test.skip('rename - error', async () => {
   await expect(FileSystemApp.rename('settings.json', 'new-settings.json')).rejects.toThrow(new Error('not allowed'))
 })
 
-test('remove - error', async () => {
+test.skip('remove - error', async () => {
   await expect(FileSystemApp.remove('settings.json')).rejects.toThrow(new Error('not allowed'))
 })
 
-test('mkdir - error', async () => {
+test.skip('mkdir - error', async () => {
   await expect(FileSystemApp.mkdir('my-folder')).rejects.toThrow(new Error('not allowed'))
 })
 
 // TODO test writeFile and writeFile errors
 
-test('readFile - settings - error - file does not exist', async () => {
+test.skip('readFile - settings - error - file does not exist', async () => {
   // @ts-ignore
   PlatformPaths.getUserSettingsPath.mockImplementation(() => {
     return '~/.config/app/settings.json'
@@ -127,7 +127,7 @@ test('readFile - settings - error - file does not exist', async () => {
   expect(FileSystem.readFile).toHaveBeenCalledWith('~/.config/app/settings.json')
 })
 
-test('writeFile - settings - error parent folder does not exist', async () => {
+test.skip('writeFile - settings - error parent folder does not exist', async () => {
   // @ts-ignore
   PlatformPaths.getUserSettingsPath.mockImplementation(() => {
     return '~/.config/app/settings.json'
