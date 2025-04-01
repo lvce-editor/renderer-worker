@@ -1,9 +1,9 @@
+import type { ActivityBarState } from './ActivityBarState.ts'
 import * as GetActivityBarItems from '../GetActivityBarItems/GetActivityBarItems.ts'
 import * as GetFilteredActivityBarItems from '../GetFilteredActivityBarItems/GetFilteredActivityBarItems.ts'
 import * as Height from '../Height/Height.js'
 import * as ViewletModuleId from '../ViewletModuleId/ViewletModuleId.js'
 import * as ViewletStates from '../ViewletStates/ViewletStates.js'
-import type { ActivityBarState } from './ActivityBarState.ts'
 import { focusIndex } from './ViewletActivityBarFocusIndex.js'
 
 // TODO rename viewlet parameter to something else (e.g. clicking settings opens context menu not settings viewlet)

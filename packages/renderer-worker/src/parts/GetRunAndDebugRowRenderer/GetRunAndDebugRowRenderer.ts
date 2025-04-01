@@ -1,6 +1,7 @@
+import type { DebugRow } from '../DebugRow/DebugRow.ts'
+import type { VirtualDomNode } from '../VirtualDomNode/VirtualDomNode.ts'
 import * as AriaRoles from '../AriaRoles/AriaRoles.js'
 import * as ClassNames from '../ClassNames/ClassNames.js'
-import type { DebugRow } from '../DebugRow/DebugRow.ts'
 import * as DebugRowType from '../DebugRowType/DebugRowType.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.js'
 import * as GetChevronVirtualDom from '../GetChevronVirtualDom/GetChevronVirtualDom.js'
@@ -8,7 +9,6 @@ import * as GetDebugValueClassName from '../GetDebugValueClassName/GetDebugValue
 import * as GetRunAndDebugRowSectionHeadingVirtualDom from '../GetRunAndDebugRowSectionHeadingVirtualDom/GetRunAndDebugRowSectionHeadingVirtualDom.ts'
 import * as VirtualDomElements from '../VirtualDomElements/VirtualDomElements.js'
 import * as VirtualDomHelpers from '../VirtualDomHelpers/VirtualDomHelpers.js'
-import type { VirtualDomNode } from '../VirtualDomNode/VirtualDomNode.ts'
 
 const separator = VirtualDomHelpers.text(': ')
 
@@ -72,7 +72,7 @@ const renderCheckBox = (row: DebugRow): readonly VirtualDomNode[] => {
 
 const renderScope = (row: DebugRow): readonly VirtualDomNode[] => {
   const { key, expanded } = row
-  let className = ClassNames.DebugRow
+  const className = ClassNames.DebugRow
   return [
     {
       type: VirtualDomElements.Div,

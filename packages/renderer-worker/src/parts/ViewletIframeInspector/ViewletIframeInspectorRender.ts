@@ -1,6 +1,6 @@
+import type { IframeInspectorState } from './ViewletIframeInspectorTypes.ts'
 import * as AdjustCommands from '../AdjustCommands/AdjustCommands.js'
 import * as IframeInspectorWorker from '../IframeInspectorWorker/IframeInspectorWorker.js'
-import type { IframeInspectorState } from './ViewletIframeInspectorTypes.ts'
 
 export const hasFunctionalRender = true
 

@@ -1,11 +1,11 @@
 import * as Assert from '../Assert/Assert.ts'
+import * as Focus from '../Focus/Focus.js'
 import * as GetTerminalSpawnOptions from '../GetTerminalSpawnOptions/GetTerminalSpawnOptions.js'
 import * as Id from '../Id/Id.js'
 import * as RendererProcess from '../RendererProcess/RendererProcess.js'
 import * as TerminalWorker from '../TerminalWorker/TerminalWorker.js'
-import * as Workspace from '../Workspace/Workspace.js'
-import * as Focus from '../Focus/Focus.js'
 import * as WhenExpression from '../WhenExpression/WhenExpression.js'
+import * as Workspace from '../Workspace/Workspace.js'
 
 // TODO implement a functional terminal component, maybe using offscreencanvas
 

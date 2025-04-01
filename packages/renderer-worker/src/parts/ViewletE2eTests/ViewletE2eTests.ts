@@ -1,3 +1,4 @@
+import type { E2eState } from './ViewletE2eTestsTypes.ts'
 import * as ContextMenu from '../ContextMenu/ContextMenu.js'
 import * as FileSystem from '../FileSystem/FileSystem.js'
 import * as GetE2eTestsSandbox from '../GetE2eTestsSandbox/GetE2eTestsSandbox.ts'
@@ -7,7 +8,6 @@ import * as Open from '../Open/Open.js'
 import * as OpenUri from '../OpenUri/OpenUri.js'
 import * as SharedProcess from '../SharedProcess/SharedProcess.js'
 import * as Transferrable from '../Transferrable/Transferrable.js'
-import type { E2eState } from './ViewletE2eTestsTypes.ts'
 
 export const create = (id, uri, x, y, width, height): E2eState => {
   return {

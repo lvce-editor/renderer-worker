@@ -1,8 +1,8 @@
+import type { SearchState } from './ViewletSearchTypes.ts'
 import * as AssetDir from '../AssetDir/AssetDir.js'
 import * as Platform from '../Platform/Platform.js'
 import * as TextSearchWorker from '../TextSearchWorker/TextSearchWorker.js'
 import * as Workspace from '../Workspace/Workspace.js'
-import type { SearchState } from './ViewletSearchTypes.ts'
 
 export const create = (id: any, uri: string, x: number, y: number, width: number, height: number): SearchState => {
   return {

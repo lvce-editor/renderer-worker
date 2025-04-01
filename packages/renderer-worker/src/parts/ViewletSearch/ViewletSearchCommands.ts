@@ -1,6 +1,6 @@
 import * as TextSearchWorker from '../TextSearchWorker/TextSearchWorker.js'
-import * as WrapTextSearchCommand from './WrapTextSearchCommand.ts'
 import * as ViewletSearch from './ViewletSearch.ts'
+import * as WrapTextSearchCommand from './WrapTextSearchCommand.ts'
 
 export const Commands = {}
 

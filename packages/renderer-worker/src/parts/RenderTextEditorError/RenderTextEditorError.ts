@@ -1,5 +1,5 @@
-import { EditorErrorInfo } from '../EditorErrorInfo/EditorErrorInfo.ts'
-import { EditorErrorInfoAction } from '../EditorErrorInfoAction/EditorErrorInfoAction.ts'
+import type { EditorErrorInfo } from '../EditorErrorInfo/EditorErrorInfo.ts'
+import type { EditorErrorInfoAction } from '../EditorErrorInfoAction/EditorErrorInfoAction.ts'
 import * as VirtualDomElements from '../VirtualDomElements/VirtualDomElements.js'
 import { text } from '../VirtualDomHelpers/VirtualDomHelpers.js'
 

@@ -1,5 +1,5 @@
-import * as Assert from '../Assert/Assert.ts'
 import type { EditorGroup } from '../EditorGroup/EditorGroup.ts'
+import * as Assert from '../Assert/Assert.ts'
 import * as Id from '../Id/Id.js'
 import * as Viewlet from '../Viewlet/Viewlet.js'
 import * as ViewletManager from '../ViewletManager/ViewletManager.js'

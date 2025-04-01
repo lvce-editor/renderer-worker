@@ -1,5 +1,5 @@
-import * as Viewlet from '../Viewlet/Viewlet.js'
 import type { MainState } from './ViewletMainTypes.ts'
+import * as Viewlet from '../Viewlet/Viewlet.js'
 
 const getUid = (editor) => {
   return editor.uid

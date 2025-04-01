@@ -1,5 +1,5 @@
-import * as AboutViewWorker from '../AboutViewWorker/AboutViewWorker.js'
 import type { AboutState } from './ViewletAboutTypes.ts'
+import * as AboutViewWorker from '../AboutViewWorker/AboutViewWorker.js'
 
 export const create = (id: number): AboutState => {
   return {

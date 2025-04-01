@@ -45,12 +45,10 @@ export const openUri = async (state, uri, focus = true, { preview = false, ...co
   }
   for (let i = 0; i < editors.length; i++) {
     const editor = editors[i]
-    if (editor.uri === uri) {
-      // @ts-ignore
-      if (editor.opener === context.opener) {
+    if (editor.uri === uri && // @ts-ignore
+      editor.opener === context.opener) {
         return ViewletMainFocusIndex.focusIndex(state, i)
       }
-    }
   }
   // TODO editor needs to be disposed when closing
   //  other tabs and closing all tabs

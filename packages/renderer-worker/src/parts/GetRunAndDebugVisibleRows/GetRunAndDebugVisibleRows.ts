@@ -1,11 +1,11 @@
-import * as DebugItemFlags from '../DebugItemFlags/DebugItemFlags.js'
 import type { DebugRow } from '../DebugRow/DebugRow.ts'
+import * as DebugItemFlags from '../DebugItemFlags/DebugItemFlags.js'
+import * as DebugRowType from '../DebugRowType/DebugRowType.ts'
 import * as DebugScopeChainType from '../DebugScopeChainType/DebugScopeChainType.js'
 import * as DebugStrings from '../DebugStrings/DebugStrings.js'
+import * as ExceptionBreakPoints from '../ExceptionBreakPoints/ExceptionBreakPoints.js'
 import * as GetVisibleScopeItems from '../GetVisibleScopeItems/GetVisibleScopeItems.js'
 import * as InputName from '../InputName/InputName.js'
-import * as ExceptionBreakPoints from '../ExceptionBreakPoints/ExceptionBreakPoints.js'
-import * as DebugRowType from '../DebugRowType/DebugRowType.ts'
 
 const getRunAndDebugVisibleRowsWatch = (state): readonly DebugRow[] => {
   const { watchExpanded } = state
