@@ -2,7 +2,6 @@
   "name": "@lvce-editor/renderer-worker",
   "version": "0.0.0-dev",
   "description": "",
-  "keywords": [],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lvce-editor/renderer-search-worker.git"
