@@ -12,6 +12,8 @@ export default [
       '@typescript-eslint/unbound-method': 'off',
       'no-console': 'off',
       'no-constant-condition': 'off',
+
+      '@typescript-eslint/no-deprecated': 'off',
     },
   },
 ]
