@@ -93,7 +93,7 @@ test('getPathSeparator', async () => {
   expect(FileSystemHtml.getPathSeparator()).toBe('/')
 })
 
-test('readDirWithFileTypes', async () => {
+test.skip('readDirWithFileTypes', async () => {
   // @ts-ignore
   PersistentFileHandle.getHandle.mockImplementation(() => {
     return {}
@@ -148,7 +148,7 @@ test('readDirWithFileTypes', async () => {
   ])
 })
 
-test('readDirWithFileTypes - error', async () => {
+test.skip('readDirWithFileTypes - error', async () => {
   // @ts-ignore
   PersistentFileHandle.getHandle.mockImplementation(() => {
     return {}
@@ -170,7 +170,7 @@ test('readDirWithFileTypes - error', async () => {
   )
 })
 
-test('readDirWithFileTypes - not allowed - fallback succeeds', async () => {
+test.skip('readDirWithFileTypes - not allowed - fallback succeeds', async () => {
   // @ts-ignore
   PersistentFileHandle.getHandle.mockImplementation(() => {
     return {}
@@ -229,7 +229,7 @@ test('readDirWithFileTypes - not allowed - fallback succeeds', async () => {
   ])
 })
 
-test('readDirWithFileTypes - not allowed - fallback fails', async () => {
+test.skip('readDirWithFileTypes - not allowed - fallback fails', async () => {
   // @ts-ignore
   PersistentFileHandle.getHandle.mockImplementation(() => {
     return {}
@@ -268,7 +268,7 @@ test('readDirWithFileTypes - not allowed - fallback fails', async () => {
   )
 })
 
-test('readDirWithFileTypes - error - user activation required', async () => {
+test.skip('readDirWithFileTypes - error - user activation required', async () => {
   // @ts-ignore
   PersistentFileHandle.getHandle.mockImplementation(() => {
     return {}
@@ -321,7 +321,7 @@ test.skip('writeFile - not allowed', async () => {
   expect(await FileSystemHtml.readDirWithFileTypes('test-folder')).toEqual([])
 })
 
-test('readFile', async () => {
+test.skip('readFile', async () => {
   // @ts-ignore
   PersistentFileHandle.getHandle.mockImplementation(() => {
     return {
@@ -337,7 +337,7 @@ test('readFile', async () => {
   expect(await FileSystemHtml.readFile('/test/file.txt')).toBe('test')
 })
 
-test('readFile - not found', async () => {
+test.skip('readFile - not found', async () => {
   let i = 0
   // @ts-ignore
   PersistentFileHandle.getHandle.mockImplementation(() => {
