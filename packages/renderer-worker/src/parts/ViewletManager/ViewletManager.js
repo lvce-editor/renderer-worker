@@ -5,11 +5,13 @@ import { CancelationError } from '../Errors/CancelationError.js'
 import * as GlobalEventBus from '../GlobalEventBus/GlobalEventBus.js'
 import * as Id from '../Id/Id.js'
 import * as KeyBindingsState from '../KeyBindingsState/KeyBindingsState.js'
+import * as MenuEntriesRegistryState from '../MenuEntriesRegistryState/MenuEntriesRegistryState.js'
+import * as MouseActions from '../MouseActions/MouseActions.ts'
 import * as NameAnonymousFunction from '../NameAnonymousFunction/NameAnonymousFunction.js'
 import * as PrettyError from '../PrettyError/PrettyError.js'
 import * as RendererProcess from '../RendererProcess/RendererProcess.js'
 import * as SaveState from '../SaveState/SaveState.js'
-import * as MenuEntriesRegistryState from '../MenuEntriesRegistryState/MenuEntriesRegistryState.js'
+import { updateDynamicFocusContext } from '../UpdateDynamicFocusContext/UpdateDynamicFocusContext.js'
 import * as ViewletManagerVisitor from '../ViewletManagerVisitor/ViewletManagerVisitor.js'
 import * as ViewletModuleId from '../ViewletModuleId/ViewletModuleId.js'
 import * as ViewletStates from '../ViewletStates/ViewletStates.js'
@@ -55,6 +57,7 @@ const runFn = async (instance, id, key, fn, args) => {
       return
     }
     const commands = render(instance.factory, oldState, newState, newState.uid || id)
+    updateDynamicFocusContext(commands)
     ViewletStates.setRenderedState(id, newState)
     await RendererProcess.invoke(/* Viewlet.sendMultiple */ kSendMultiple, /* commands */ commands)
   } else {
@@ -88,6 +91,15 @@ const runFnWithSideEffect = async (instance, id, key, fn, ...args) => {
 const wrapViewletCommand = (id, key, fn) => {
   Assert.string(id)
   Assert.fn(fn)
+  if (fn.returnValue) {
+    const wrappedViewletCommand = async (...args) => {
+      // TODO get actual focused instance
+      const activeInstance = ViewletStates.getInstance(id)
+      const result = await fn(activeInstance.state, ...args)
+      return result
+    }
+    return wrappedViewletCommand
+  }
   const wrappedViewletCommand = async (...args) => {
     // TODO get actual focused instance
     const activeInstance = ViewletStates.getInstance(id)
@@ -129,7 +141,6 @@ const wrapViewletCommandWithSideEffectLazy = (id, key, importFn) => {
       throw new TypeError(`${id}.${key} is not a function`)
     }
     const activeInstance = ViewletStates.getInstance(id)
-    console.log({ activeInstance })
     await runFnWithSideEffect(activeInstance, id, key, fn, ...args)
   }
   NameAnonymousFunction.nameAnonymousFunction(lazyCommand, `${id}/lazy/${key}`)
@@ -448,6 +459,7 @@ export const load = async (viewlet, focus = false, restore = false, restoreState
     }
     const args = viewlet.args || []
     let newState = await module.loadContent(viewletState, instanceSavedState, ...args)
+
     if (module.renderEventListeners) {
       // TODO reuse event listeners between components
       const eventListeners = await module.renderEventListeners()
@@ -459,8 +471,12 @@ export const load = async (viewlet, focus = false, restore = false, restoreState
     const extraCommands = []
 
     if (module.getKeyBindings) {
-      const keyBindings = await module.getKeyBindings()
+      const keyBindings = await module.getKeyBindings(viewletUid)
       KeyBindingsState.addKeyBindings(viewlet.id, keyBindings)
+    }
+    if (module.Commands && module.Commands.getMouseActions) {
+      const mouseActions = await module.Commands.getMouseActions(viewletUid)
+      MouseActions.add(viewletUid, mouseActions)
     }
 
     if (module.getChildren) {
@@ -531,6 +547,10 @@ export const load = async (viewlet, focus = false, restore = false, restoreState
       commands.push(...additionalExtraCommands)
     }
 
+    if (module.Commands && module.Commands['loadContentLater']) {
+      const commands = await module.Commands['loadContentLater'](newState)
+    }
+
     const instanceNow = ViewletStates.getInstance(viewletUid)
     viewletState = instanceNow.renderedState
     if (module.hasFunctionalRender) {
@@ -597,7 +617,7 @@ export const load = async (viewlet, focus = false, restore = false, restoreState
     }
     viewlet.type = 4
     const prettyError = await PrettyError.prepare(error)
-    PrettyError.print(prettyError)
+    await PrettyError.print(prettyError)
     try {
       if (module && module.handleError) {
         await module.handleError(error)
