@@ -2,14 +2,15 @@ import * as Assert from '../Assert/Assert.ts'
 import * as ElectronBrowserView from '../ElectronBrowserView/ElectronBrowserView.js'
 import * as GlobalEventBus from '../GlobalEventBus/GlobalEventBus.js'
 import * as Id from '../Id/Id.js'
+import * as KeyBindingsState from '../KeyBindingsState/KeyBindingsState.js'
 import * as Logger from '../Logger/Logger.js'
 import * as RendererProcess from '../RendererProcess/RendererProcess.js'
+import * as UpdateDynamicFocusContext from '../UpdateDynamicFocusContext/UpdateDynamicFocusContext.js'
 import { VError } from '../VError/VError.js'
 import * as ViewletManager from '../ViewletManager/ViewletManager.js'
 import * as ViewletModule from '../ViewletModule/ViewletModule.js'
 import * as ViewletModuleId from '../ViewletModuleId/ViewletModuleId.js'
 import * as ViewletStates from '../ViewletStates/ViewletStates.js'
-import * as KeyBindingsState from '../KeyBindingsState/KeyBindingsState.js'
 import * as ViewletElectron from './ViewletElectron.js'
 
 export const focus = async (id) => {
@@ -352,22 +353,18 @@ export const openWidget = async (moduleId, ...args) => {
   }
   const layout = ViewletStates.getState(ViewletModuleId.Layout)
   const focusByNameIndex = commands.findIndex((command) => command[0] === 'Viewlet.focusElementByName')
+
   const append = ['Viewlet.append', layout.uid, childUid]
   if (focusByNameIndex !== -1) {
     commands.splice(focusByNameIndex, 0, append)
   } else {
     commands.push(['Viewlet.append', layout.uid, childUid])
   }
-  // TODO ask view to render, rendering focus
+
+  // TODO send focus changes to renderer process together with other message
+  UpdateDynamicFocusContext.updateDynamicFocusContext(commands)
   commands.push(['Viewlet.focus', childUid])
   await RendererProcess.invoke('Viewlet.executeCommands', commands)
-  // TODO commands should be like this
-  // viewlet.create quickpick
-  // quickpick.setItems
-  // quickpick.setFocusedIndex
-  // quickpick.setValue
-  // viewlet.show quickpick
-  //
 }
 
 export const closeWidget = async (id) => {
@@ -438,6 +435,7 @@ export const executeViewletCommand = async (uid, fnName, ...args) => {
   if ('newState' in newState) {
     commands.push(...newState.commands)
   }
+  UpdateDynamicFocusContext.updateDynamicFocusContext(commands)
   ViewletStates.setRenderedState(uid, actualNewState)
   if (commands.length === 0) {
     return
