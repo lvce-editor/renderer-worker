@@ -1,4 +1,5 @@
 import { beforeAll, beforeEach, expect, jest, test } from '@jest/globals'
+// @ts-ignore
 import { setTimeout } from 'node:timers/promises'
 import * as GlobalEventBus from '../src/parts/GlobalEventBus/GlobalEventBus.js'
 import * as ModuleId from '../src/parts/ModuleId/ModuleId.js'
@@ -134,7 +135,8 @@ test.skip('setPath', async () => {
   })
   GlobalEventBus.addListener('workspace.change', listener)
   await Workspace.setPath('/test')
-  expect(listener).toBeCalledTimes(1)
+  // @ts-ignore
+  expect(listener).toHaveBeenCalledTimes(1)
   expect(listener).toHaveBeenCalledWith('/test')
   expect(RendererProcess.state.send).toHaveBeenCalledTimes(1)
   expect(RendererProcess.state.send).toHaveBeenCalledWith([909090, expect.any(Number), 'WindowTitle.set', '/test'])
