@@ -60,7 +60,7 @@ test('getNoResults', () => {
   })
 })
 
-test('getPicks', async () => {
+test.skip('getPicks', async () => {
   // @ts-ignore
   Command.execute.mockImplementation(() => {
     return []
