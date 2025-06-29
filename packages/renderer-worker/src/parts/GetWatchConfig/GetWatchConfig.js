@@ -44,5 +44,26 @@ export const getWatchConfig = () => {
       command: 'KeyBindings.hotReload',
     })
   }
+  const sourceControl = Preferences.get('develop.sourceControlWorkerPath')
+  if (sourceControl) {
+    watchConfig.push({
+      path: sourceControl,
+      command: 'Source Control.hotReload',
+    })
+  }
+  const debug = Preferences.get('develop.debugWorkerPath')
+  if (debug) {
+    watchConfig.push({
+      path: debug,
+      command: 'Run And Debug.hotReload',
+    })
+  }
+  const clipBoard = Preferences.get('develop.clipBoardWorkerPath')
+  if (clipBoard) {
+    watchConfig.push({
+      path: clipBoard,
+      command: 'ClipBoard.hotReload',
+    })
+  }
   return watchConfig
 }
