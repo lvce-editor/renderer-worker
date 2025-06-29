@@ -4,13 +4,17 @@ export const name = 'FileSystem'
 
 export const Commands = {
   chmod: FileSystem.chmod,
+  copy: FileSystem.copy,
   getBlob: FileSystem.getBlob,
+  getFolderSize: FileSystem.getFolderSize,
   getPathSeparator: FileSystem.getPathSeparator,
   mkdir: FileSystem.mkdir,
   readDirWithFileTypes: FileSystem.readDirWithFileTypes,
   readFile: FileSystem.readFile,
-  remove: FileSystem.remove,
-  writeFile: FileSystem.writeFile,
   readJson: FileSystem.readJson,
-  getFolderSize: FileSystem.getFolderSize,
+  remove: FileSystem.remove,
+  rename: FileSystem.rename,
+  writeFile: FileSystem.writeFile,
+  stat: FileSystem.stat,
+  getRealPath: FileSystem.getRealPath,
 }
