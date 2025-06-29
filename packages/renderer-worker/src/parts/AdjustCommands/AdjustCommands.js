@@ -5,6 +5,9 @@ export const apply = (oldState, newState) => {
     return []
   }
   const adjustedCommands = commands.map((command) => {
+    if (command[1] === newState.uid) {
+      return command
+    }
     if (command[0] === 'Viewlet.setDom2') {
       return ['Viewlet.setDom2', newState.uid, ...command.slice(1)]
     }
@@ -17,11 +20,19 @@ export const apply = (oldState, newState) => {
     if (command[0] === 'Viewlet.setValueByName') {
       return ['Viewlet.setValueByName', newState.uid, ...command.slice(1)]
     }
+    if (command[0] === 'Viewlet.setCheckBoxValue') {
+      return ['Viewlet.setCheckBoxValue', newState.uid, ...command.slice(1)]
+    }
+    if (command[0] === 'Viewlet.setFocusContext') {
+      return ['Viewlet.setFocusContext', newState.uid, ...command.slice(1)]
+    }
     if (
       command[0] === 'Viewlet.create' ||
       command[0] === 'Viewlet.send' ||
       command[0] === 'Viewlet.createFunctionalRoot' ||
-      command[0] === 'Viewlet.setDom2'
+      command[0] === 'Viewlet.setDom2' ||
+      command[0] === 'Viewlet.setSelectionByName' ||
+      command[0] === 'Viewlet.setCss'
     ) {
       return command
     }
