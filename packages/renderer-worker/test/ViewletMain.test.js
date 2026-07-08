@@ -54,6 +54,7 @@ const RendererProcess = await import('../src/parts/RendererProcess/RendererProce
 const SharedProcess = await import('../src/parts/SharedProcess/SharedProcess.js')
 const ViewletStates = await import('../src/parts/ViewletStates/ViewletStates.js')
 const ViewletMain = await import('../src/parts/ViewletMain/ViewletMain.js')
+const ViewletMainOpenUri = await import('../src/parts/ViewletMain/ViewletMainOpenUri.ts')
 
 test('create', () => {
   const state = ViewletMain.create(1)
@@ -108,6 +109,29 @@ test('loadContent - one restored editor', async () => {
       },
     ],
   })
+})
+
+test('openUri - defers editor focus commands', () => {
+  const { otherCommands, focusCommands } = ViewletMainOpenUri.getCommandsWithDeferredFocus(
+    [
+      ['Viewlet.createFunctionalRoot', 'EditorText', 2],
+      ['Viewlet.send', 2, 'setText', []],
+      ['Viewlet.send', 2, 'setFocused', true],
+      ['Viewlet.focusSelector', 2, '.EditorInput textarea'],
+      ['Viewlet.send', 3, 'setFocused', true],
+    ],
+    2,
+  )
+
+  expect(otherCommands).toEqual([
+    ['Viewlet.createFunctionalRoot', 'EditorText', 2],
+    ['Viewlet.send', 2, 'setText', []],
+    ['Viewlet.send', 3, 'setFocused', true],
+  ])
+  expect(focusCommands).toEqual([
+    ['Viewlet.send', 2, 'setFocused', true],
+    ['Viewlet.focusSelector', 2, '.EditorInput textarea'],
+  ])
 })
 
 // TODO test is flaky

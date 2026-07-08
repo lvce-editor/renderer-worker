@@ -10,6 +10,30 @@ import * as ViewletModule from '../ViewletModule/ViewletModule.js'
 import * as ViewletStates from '../ViewletStates/ViewletStates.js'
 import * as ViewletMainFocusIndex from './ViewletMainFocusIndex.js'
 
+const isFocusCommand = (command, uid) => {
+  return (
+    (command[0] === 'Viewlet.send' && command[1] === uid && command[2] === 'setFocused') ||
+    (command[0] === 'Viewlet.focusSelector' && command[1] === uid) ||
+    (command[0] === 'Viewlet.focusElementByName' && command[1] === uid)
+  )
+}
+
+export const getCommandsWithDeferredFocus = (commands, uid) => {
+  const focusCommands: any[] = []
+  const otherCommands: any[] = []
+  for (const command of commands) {
+    if (isFocusCommand(command, uid)) {
+      focusCommands.push(command)
+    } else {
+      otherCommands.push(command)
+    }
+  }
+  return {
+    focusCommands,
+    otherCommands,
+  }
+}
+
 export const openUri = async (state, uri, focus = true, { preview = false, ...context }: any = {}) => {
   Assert.object(state)
   Assert.string(uri)
@@ -93,17 +117,19 @@ export const openUri = async (state, uri, focus = true, { preview = false, ...co
   }
   // @ts-ignore
   const commands = await ViewletManager.load(instance, focus)
-  commands.push(['Viewlet.setBounds', instanceUid, activeGroup.x, tabHeight, activeGroup.width, contentHeight])
+  const { focusCommands, otherCommands } = focus ? getCommandsWithDeferredFocus(commands, instanceUid) : { focusCommands: [], otherCommands: commands }
+  otherCommands.push(['Viewlet.setBounds', instanceUid, activeGroup.x, tabHeight, activeGroup.width, contentHeight])
   let tabsUid = state.tabsUid
   if (tabsUid === -1) {
     tabsUid = Id.create()
   }
   if (disposeCommands) {
-    commands.push(...disposeCommands)
+    otherCommands.push(...disposeCommands)
   }
-  commands.push(['Viewlet.append', state.uid, instanceUid])
+  otherCommands.push(['Viewlet.append', state.uid, instanceUid])
+  otherCommands.push(...focusCommands)
   if (focus) {
-    commands.push(['Viewlet.focus', instanceUid])
+    otherCommands.push(['Viewlet.focus', instanceUid])
   }
   const latestState = ViewletStates.getState(state.uid)
   const latestPendingUid = latestState.pendingUid
@@ -116,7 +142,7 @@ export const openUri = async (state, uri, focus = true, { preview = false, ...co
   if (!ViewletStates.hasInstance(instanceUid)) {
     return {
       newState: state,
-      commands,
+      commands: otherCommands,
     }
   }
   return {
@@ -125,6 +151,6 @@ export const openUri = async (state, uri, focus = true, { preview = false, ...co
       tabsUid,
       groups: newGroups,
     },
-    commands,
+    commands: otherCommands,
   }
 }
