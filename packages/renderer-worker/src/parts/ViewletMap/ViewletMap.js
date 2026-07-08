@@ -14,6 +14,9 @@ const mapExtToEditorType = {
 }
 
 export const getModuleId = async (uri, opener) => {
+  if (opener === 'editor') {
+    return ViewletModuleId.EditorText
+  }
   if (uri === 'app://keybindings') {
     return ViewletModuleId.KeyBindings
   }

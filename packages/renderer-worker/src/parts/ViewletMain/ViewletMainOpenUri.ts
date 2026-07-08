@@ -10,7 +10,7 @@ import * as ViewletModule from '../ViewletModule/ViewletModule.js'
 import * as ViewletStates from '../ViewletStates/ViewletStates.js'
 import * as ViewletMainFocusIndex from './ViewletMainFocusIndex.js'
 
-export const openUri = async (state, uri, focus = true, { preview = false, ...context } = {}) => {
+export const openUri = async (state, uri, focus = true, { preview = false, ...context }: any = {}) => {
   Assert.object(state)
   Assert.string(uri)
   const { tabFontWeight, tabFontSize, tabFontFamily, tabLetterSpacing, groups, activeGroupIndex, tabHeight } = state
@@ -73,6 +73,7 @@ export const openUri = async (state, uri, focus = true, { preview = false, ...co
     tabWidth,
     flags: TabFlags.Preview,
     moduleId,
+    opener: context.opener,
   }
   const newEditors = [...activeGroup.editors, newEditor]
   const newActiveIndex = newEditors.length - 1
