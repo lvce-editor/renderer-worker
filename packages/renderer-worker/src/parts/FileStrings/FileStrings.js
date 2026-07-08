@@ -10,6 +10,7 @@ const UiStrings = {
   OpenFile: 'Open File',
   OpenFolder: 'Open Folder',
   OpenRecent: 'Open Recent',
+  CloseWindow: 'Close Window',
   Exit: 'Exit',
   Save: 'Save',
   SaveAll: 'Save All',
@@ -33,6 +34,10 @@ export const openFolder = () => {
 
 export const openRecent = () => {
   return I18nString.i18nString(UiStrings.OpenRecent)
+}
+
+export const closeWindow = () => {
+  return I18nString.i18nString(UiStrings.CloseWindow)
 }
 
 export const save = () => {

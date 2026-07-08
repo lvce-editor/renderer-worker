@@ -55,12 +55,21 @@ export const getMenuEntries = () => {
     },
   ]
   if (Platform.platform === PlatformType.Electron) {
-    entries.push(MenuEntrySeparator.menuEntrySeparator, {
-      id: 'exit',
-      label: FileStrings.exit(),
-      flags: MenuItemFlags.Ignore,
-      command: 'Chrome.exit',
-    })
+    entries.push(
+      MenuEntrySeparator.menuEntrySeparator,
+      {
+        id: 'closeWindow',
+        label: FileStrings.closeWindow(),
+        flags: MenuItemFlags.Ignore,
+        command: 'Chrome.close',
+      },
+      {
+        id: 'exit',
+        label: FileStrings.exit(),
+        flags: MenuItemFlags.Ignore,
+        command: 'Chrome.exit',
+      },
+    )
   }
   return entries
 }
