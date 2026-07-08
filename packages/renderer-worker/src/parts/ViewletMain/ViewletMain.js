@@ -717,7 +717,7 @@ const getWebViews = async (uri) => {
   return [
     {
       id: 'editor',
-      label: 'Editor',
+      label: 'Text Editor',
     },
     ...quickPickEntries,
   ]
@@ -726,10 +726,10 @@ const getWebViews = async (uri) => {
 export const reopenEditorWith = async (state) => {
   // TODO
   // 1. get current editor type
-  const { groups } = state
-  const group = groups[0]
-  const { editors } = group
-  const editor = editors[0]
+  const { groups, activeGroupIndex } = state
+  const group = groups[activeGroupIndex]
+  const { editors, activeIndex } = group
+  const editor = editors[activeIndex]
   // 2. get webviews that exist for editor type
   const webViews = await getWebViews(editor.uri)
   // 3. open quickpick, asking to select an editor type
