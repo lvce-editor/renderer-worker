@@ -249,8 +249,13 @@ export const resize = async (id, dimensions) => {
   Assert.number(id)
   Assert.object(dimensions)
   const instance = ViewletStates.getInstance(id)
-  if (!instance || !instance.factory || !instance.factory.resize) {
-    console.warn('cannot resize', id)
+  if (!instance) {
+    console.warn(`Cannot resize component instance ${id}: instance not found`)
+    return []
+  }
+  if (!instance.factory || !instance.factory.resize) {
+    const componentName = instance.factory?.name || instance.moduleId || id
+    console.warn(`The "${componentName}" component is missing a resize function`)
     return []
   }
   const oldState = instance.state
