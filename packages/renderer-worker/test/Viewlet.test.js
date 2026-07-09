@@ -58,6 +58,42 @@ test.skip('setState - shouldApplyNewState returns false', () => {
   // }
 })
 
+test('resize - missing resize function', async () => {
+  const spy = jest.spyOn(console, 'warn').mockImplementation(() => {})
+  ViewletStates.set(2, {
+    state: { uid: 2 },
+    renderedState: { uid: 2 },
+    moduleId: 'ProcessExplorer',
+    factory: { name: 'Process Explorer' },
+  })
+
+  const result = await Viewlet.resize(2, {})
+
+  expect(result).toEqual([])
+  expect(spy).toHaveBeenCalledWith('The "Process Explorer" component is missing a resize function')
+  spy.mockRestore()
+})
+
+test('resize - missing resize function falls back to module id', async () => {
+  const spy = jest.spyOn(console, 'warn').mockImplementation(() => {})
+
+  const result = await Viewlet.resize(1, {})
+
+  expect(result).toEqual([])
+  expect(spy).toHaveBeenCalledWith('The "Layout" component is missing a resize function')
+  spy.mockRestore()
+})
+
+test('resize - missing instance', async () => {
+  const spy = jest.spyOn(console, 'warn').mockImplementation(() => {})
+
+  const result = await Viewlet.resize(2, {})
+
+  expect(result).toEqual([])
+  expect(spy).toHaveBeenCalledWith('Cannot resize component instance 2: instance not found')
+  spy.mockRestore()
+})
+
 test('openWidget - once', async () => {
   // @ts-ignore
   ViewletManager.load.mockImplementation(() => {
