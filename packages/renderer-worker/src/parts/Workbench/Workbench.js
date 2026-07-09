@@ -6,6 +6,7 @@ import * as ExecuteCurrentTest from '../ExecuteCurrentTest/ExecuteCurrentTest.js
 import * as FileSystemMap from '../FileSystemMap/FileSystemMap.js'
 import * as FileSystemState from '../FileSystemState/FileSystemState.js'
 import * as Focus from '../Focus/Focus.js'
+import * as GetStartupOpenUri from '../GetStartupOpenUri/GetStartupOpenUri.js'
 import * as IconTheme from '../IconTheme/IconTheme.js'
 import * as Id from '../Id/Id.js'
 import * as InitData from '../InitData/InitData.js'
@@ -199,6 +200,11 @@ export const startup = async () => {
   LifeCycle.mark(LifeCyclePhase.Five)
 
   await Promise.all(actions.map((action) => action()))
+
+  const startupOpenUri = GetStartupOpenUri.getStartupOpenUri(initData.Location)
+  if (startupOpenUri) {
+    await Command.execute('Main.openUri', startupOpenUri)
+  }
 
   LifeCycle.mark(LifeCyclePhase.Fifteen)
 

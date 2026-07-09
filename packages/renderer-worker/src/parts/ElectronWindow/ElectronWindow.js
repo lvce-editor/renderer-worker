@@ -20,6 +20,8 @@ export const close = forward('ElectronWindow.close')
 
 export const openNew = forward('ElectronWindow.openNew')
 
+export const openNewWithUri = forward('ElectronWindow.openNewWithUri')
+
 export const toggleDevtools = forward('ElectronWindow.toggleDevtools')
 
 export const zoomIn = forward('ElectronWindow.zoomIn')

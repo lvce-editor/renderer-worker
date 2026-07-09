@@ -7,6 +7,7 @@ export const Commands = {
   maximize: ElectronWindow.maximize,
   minimize: ElectronWindow.minimize,
   openNew: ElectronWindow.openNew,
+  openNewWithUri: ElectronWindow.openNewWithUri,
   toggleDevtools: ElectronWindow.toggleDevtools,
   unmaximize: ElectronWindow.unmaximize,
   zoomIn: ElectronWindow.zoomIn,
