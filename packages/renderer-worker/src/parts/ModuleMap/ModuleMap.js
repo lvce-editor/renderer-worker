@@ -233,6 +233,6 @@ export const getModuleId = (commandId) => {
     case 'Markdown':
       return ModuleId.Markdown
     default:
-      throw new Error(`module ${prefix} not found`)
+      throw new CommandNotFoundError(commandId)
   }
 }
