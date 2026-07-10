@@ -9,7 +9,7 @@ export const saveState = async (state) => {
   return savedState
 }
 
-export const create = (id, uri, x, y, width, height) => {
+export const create = (id, uri, x, y, width, height, _args, parentUid) => {
   return {
     id,
     uid: id,
@@ -20,6 +20,7 @@ export const create = (id, uri, x, y, width, height) => {
     y,
     platform: Platform.platform,
     assetDir: AssetDir.assetDir,
+    parentUid,
   }
 }
 
@@ -34,6 +35,7 @@ export const loadContent = async (state, savedState) => {
     state.height,
     state.platform,
     state.assetDir,
+    state.parentUid,
   )
 
   await ExtensionSearchViewWorker.invoke('SearchExtensions.loadContent', state.id, savedState)
@@ -73,6 +75,7 @@ export const hotReload = async (state) => {
     state.height,
     state.platform,
     state.assetDir,
+    state.parentUid,
   )
   await ExtensionSearchViewWorker.invoke('SearchExtensions.loadContent', state.id, savedState)
   const diffResult = await ExtensionSearchViewWorker.invoke('SearchExtensions.diff2', state.id)
