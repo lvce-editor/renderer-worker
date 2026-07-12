@@ -59,6 +59,7 @@ import * as IpcParent from '../IpcParent/IpcParent.ipc.js'
 import * as KeyBindings from '../KeyBindings/KeyBindings.ipc.js'
 import * as KeyBindingsInitial from '../KeyBindingsInitial/KeyBindingsInitial.ipc.js'
 import * as Languages from '../Languages/Languages.ipc.js'
+import * as License from '../License/License.ipc.js'
 import * as Listener from '../Listener/Listener.ipc.js'
 import * as LocalStorage from '../LocalStorage/LocalStorage.ipc.js'
 import * as Markdown from '../Markdown/Markdown.ipc.js'
@@ -185,6 +186,8 @@ export const load = (moduleId) => {
       return KeyBindings
     case ModuleId.KeyBindingsInitial:
       return KeyBindingsInitial
+    case ModuleId.License:
+      return License
     case ModuleId.Listener:
       return Listener
     case ModuleId.LocalStorage:
