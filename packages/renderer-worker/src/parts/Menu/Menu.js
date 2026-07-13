@@ -7,6 +7,7 @@ import * as GetVisibleMenuItems from '../GetVisibleMenuItems/GetVisibleMenuItems
 import * as Logger from '../Logger/Logger.js'
 import * as MenuEntries from '../MenuEntries/MenuEntries.js'
 import * as MenuItemFlags from '../MenuItemFlags/MenuItemFlags.js'
+import * as SimpleBrowserOverlay from '../SimpleBrowserOverlay/SimpleBrowserOverlay.js'
 import * as ViewletModuleId from '../ViewletModuleId/ViewletModuleId.js'
 import * as ViewletStates from '../ViewletStates/ViewletStates.js'
 
@@ -92,6 +93,10 @@ const getMenuBounds = (x, y, items) => {
 export const show = async (x, y, id, mouseBlocking = false, ...args) => {
   const items = await GetMenuEntriesWithKeyBindings.getMenuEntriesWithKeyBindings(id, ...args)
   const bounds = getMenuBounds(x, y, items)
+  const isRootMenu = state.menus.length === 0
+  if (isRootMenu) {
+    await SimpleBrowserOverlay.show('menu')
+  }
   const menu = addMenuInternal({
     id,
     items,
@@ -102,18 +107,25 @@ export const show = async (x, y, id, mouseBlocking = false, ...args) => {
   })
   const visible = GetVisibleMenuItems.getVisible(menu.items, -1, false, menu.level)
   const dom = GetMenuVirtualDom.getMenuVirtualDom(visible).slice(1)
-  await RendererProcess.invoke(
-    /* Menu.show */ 'Menu.showMenu',
-    /* x */ bounds.x,
-    /* y */ bounds.y,
-    /* width */ bounds.width,
-    /* height */ bounds.height,
-    /* items */ menu.items,
-    /* level */ menu.level,
-    /* parentIndex */ -1,
-    /* dom */ dom,
-    /* mouseBlocking */ mouseBlocking,
-  )
+  try {
+    await RendererProcess.invoke(
+      /* Menu.show */ 'Menu.showMenu',
+      /* x */ bounds.x,
+      /* y */ bounds.y,
+      /* width */ bounds.width,
+      /* height */ bounds.height,
+      /* items */ menu.items,
+      /* level */ menu.level,
+      /* parentIndex */ -1,
+      /* dom */ dom,
+      /* mouseBlocking */ mouseBlocking,
+    )
+  } catch (error) {
+    if (isRootMenu) {
+      await SimpleBrowserOverlay.hide('menu')
+    }
+    throw error
+  }
 }
 
 export const closeSubMenu = () => {
@@ -228,7 +240,11 @@ export const hide = async (restoreFocus = true) => {
     return
   }
   state.menus = []
-  await RendererProcess.invoke(/* Menu.hide */ 'Menu.hide', /* restoreFocus */ restoreFocus)
+  try {
+    await RendererProcess.invoke(/* Menu.hide */ 'Menu.hide', /* restoreFocus */ restoreFocus)
+  } finally {
+    await SimpleBrowserOverlay.hide('menu')
+  }
 }
 
 // TODO difference between focusing with mouse or keyboard
