@@ -94,6 +94,38 @@ test('resize - missing instance', async () => {
   spy.mockRestore()
 })
 
+test('dispose - waits for factory disposal before disposing the rendered viewlet', async () => {
+  let resolveDispose = () => {}
+  const disposePromise = new Promise((resolve) => {
+    resolveDispose = () => resolve(undefined)
+  })
+  const factoryDispose = jest.fn((_state) => disposePromise)
+  ViewletStates.set(2, {
+    state: { uid: 2 },
+    renderedState: { uid: 2 },
+    moduleId: 'SimpleBrowser',
+    factory: { dispose: factoryDispose },
+  })
+  // @ts-ignore
+  RendererProcess.invoke.mockImplementation(() => {})
+
+  let didDispose = false
+  const viewletDisposePromise = Viewlet.dispose(2).then(() => {
+    didDispose = true
+  })
+
+  await Promise.resolve()
+  expect(factoryDispose).toHaveBeenCalledWith({ uid: 2 })
+  expect(RendererProcess.invoke).not.toHaveBeenCalled()
+  expect(didDispose).toBe(false)
+
+  resolveDispose()
+  await viewletDisposePromise
+
+  expect(RendererProcess.invoke).toHaveBeenCalledWith('Viewlet.dispose', 2)
+  expect(didDispose).toBe(true)
+})
+
 test('openWidget - once', async () => {
   // @ts-ignore
   ViewletManager.load.mockImplementation(() => {
