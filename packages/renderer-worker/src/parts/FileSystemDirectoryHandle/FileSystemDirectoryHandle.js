@@ -6,7 +6,7 @@ import * as Assert from '../Assert/Assert.ts'
  * instead which prompts for the required permission to
  * retrieve the child handles
  *
- * @param {FileSystemDirectoryHandle} handle
+ * @param {FileSystemDirectoryHandle | { values(): AsyncIterable<FileSystemHandle> }} handle
  * @returns {Promise<FileSystemHandle[]>}
  */
 export const getChildHandles = async (handle) => {
