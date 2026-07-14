@@ -44,7 +44,7 @@ const applyColorTheme = async (colorThemeId, watchTheme = true) => {
 }
 
 const getCurrentColorTheme = () => {
-  return state.colorTheme || getPreferredColorTheme() || FALLBACK_COLOR_THEME_ID
+  return state.colorTheme || getPreferredColorTheme()
 }
 
 export const setColorTheme = async (colorThemeId) => {
@@ -69,7 +69,7 @@ export const disablePreviewColorTheme = async () => {
   if (!state.previewColorTheme) {
     return
   }
-  const colorThemeId = state.previewBaseColorTheme || getPreferredColorTheme() || FALLBACK_COLOR_THEME_ID
+  const colorThemeId = state.previewBaseColorTheme || getPreferredColorTheme()
   state.previewBaseColorTheme = ''
   state.previewColorTheme = ''
   state.previewColorThemeJson = ''
@@ -91,8 +91,7 @@ export const watch = async (id) => {
 }
 
 const getPreferredColorTheme = () => {
-  const preferredColorTheme = Preferences.get('workbench.colorTheme')
-  return preferredColorTheme
+  return Preferences.get('workbench.colorTheme') || FALLBACK_COLOR_THEME_ID
 }
 
 export const reload = async () => {
@@ -103,8 +102,7 @@ export const reload = async () => {
 // TODO test this, and also the error case
 // TODO have icon theme, color theme together (maybe)
 export const hydrate = async () => {
-  const preferredColorTheme = getPreferredColorTheme()
-  const colorThemeId = preferredColorTheme || FALLBACK_COLOR_THEME_ID
+  const colorThemeId = getPreferredColorTheme()
   try {
     await applyColorTheme(colorThemeId)
   } catch (error) {

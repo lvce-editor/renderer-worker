@@ -37,6 +37,23 @@ const Css = await import('../src/parts/Css/Css.js')
 const GetColorThemeCss = await import('../src/parts/GetColorThemeCss/GetColorThemeCss.js')
 const Preferences = await import('../src/parts/Preferences/Preferences.js')
 
+test('reload applies slime when no color theme is selected', async () => {
+  await ColorTheme.reload()
+
+  expect(ColorTheme.state.colorTheme).toBe('slime')
+  expect(GetColorThemeCss.getColorThemeCss).toHaveBeenCalledWith('slime')
+  expect(Css.addCssStyleSheet).toHaveBeenCalledWith('ContributedColorTheme', ':root { --theme-id: "slime"; }')
+})
+
+test('reload applies the selected color theme', async () => {
+  Preferences.state['workbench.colorTheme'] = 'base-theme'
+
+  await ColorTheme.reload()
+
+  expect(ColorTheme.state.colorTheme).toBe('base-theme')
+  expect(GetColorThemeCss.getColorThemeCss).toHaveBeenCalledWith('base-theme')
+})
+
 test('previewColorTheme applies preview without changing preference', async () => {
   Preferences.state['workbench.colorTheme'] = 'base-theme'
   ColorTheme.state.colorTheme = 'base-theme'
