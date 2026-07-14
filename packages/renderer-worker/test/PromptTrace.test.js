@@ -1,7 +1,6 @@
 import { beforeEach, expect, jest, test } from '@jest/globals'
 
 jest.unstable_mockModule('../src/parts/FileSystem/FileSystemDisk.js', () => ({
-  getPathSeparator: jest.fn(),
   mkdir: jest.fn(),
   writeFile: jest.fn(),
 }))
@@ -17,10 +16,20 @@ const Workspace = await import('../src/parts/Workspace/Workspace.js')
 beforeEach(() => {
   jest.resetAllMocks()
   // @ts-ignore
-  FileSystemDisk.getPathSeparator.mockResolvedValue('/')
-  // @ts-ignore
   Workspace.getPath.mockReturnValue('/workspace')
 })
+
+const createTrace = () => {
+  return PromptTrace.create({
+    error: '',
+    fileSystemAccess: undefined,
+    finishedAt: '',
+    id: '',
+    prompt: '',
+    result: undefined,
+    startedAt: '',
+  })
+}
 
 test('create - creates a Pi-inspired completed trace object', () => {
   const trace = PromptTrace.create({
@@ -42,7 +51,7 @@ test('create - creates a Pi-inspired completed trace object', () => {
   })
 
   expect(trace).toEqual({
-    cwd: '/workspace',
+    cwd: 'file:///workspace',
     finishedAt: '2026-07-14T00:01:00.000Z',
     id: 'trace-id',
     messages: [{ content: 'Fix the tests', role: 'user', timestamp: 1 }],
@@ -63,10 +72,28 @@ test('create - creates a Pi-inspired completed trace object', () => {
   })
 })
 
-test('write - writes formatted JSON below the workspace', async () => {
-  const trace = { cwd: '/workspace', id: 'trace-id' }
+test('create - parses cwd as a file URI', () => {
+  // @ts-ignore
+  Workspace.getPath.mockReturnValue('/workspace/project #1')
 
-  await expect(PromptTrace.write(trace)).resolves.toBe('/workspace/.agent-logs/trace-trace-id.json')
-  expect(FileSystemDisk.mkdir).toHaveBeenCalledWith('/workspace/.agent-logs')
-  expect(FileSystemDisk.writeFile).toHaveBeenCalledWith('/workspace/.agent-logs/trace-trace-id.json', JSON.stringify(trace, null, 2))
+  const trace = createTrace()
+
+  expect(trace.cwd).toBe('file:///workspace/project%20%231')
+})
+
+test('create - parses a Windows cwd as a file URI', () => {
+  // @ts-ignore
+  Workspace.getPath.mockReturnValue('C:\\workspace\\project')
+
+  const trace = createTrace()
+
+  expect(trace.cwd).toBe('file:///C:/workspace/project')
+})
+
+test('write - writes formatted JSON below the workspace', async () => {
+  const trace = { cwd: 'file:///workspace', id: 'trace-id' }
+
+  await expect(PromptTrace.write(trace)).resolves.toBe('file:///workspace/.agent-logs/trace-trace-id.json')
+  expect(FileSystemDisk.mkdir).toHaveBeenCalledWith('file:///workspace/.agent-logs')
+  expect(FileSystemDisk.writeFile).toHaveBeenCalledWith('file:///workspace/.agent-logs/trace-trace-id.json', JSON.stringify(trace, null, 2))
 })
