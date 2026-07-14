@@ -127,7 +127,7 @@ export const startup = async () => {
 
   IpcState.setConfig(initData.Config?.shouldLaunchMultipleWorkers)
 
-  const prompt = Platform.platform === PlatformType.Electron ? await PromptMode.getPrompt() : undefined
+  const promptOptions = Platform.platform === PlatformType.Electron ? await PromptMode.getPromptOptions() : undefined
 
   if (initData.Location.href.includes('?replayId')) {
     const url = new URL(initData.Location.href)
@@ -147,7 +147,7 @@ export const startup = async () => {
   Performance.mark(PerformanceMarkerType.DidLoadPreferences)
 
   // TODO only load this if session replay is enabled in preferences
-  if (prompt === undefined && Preferences.get('sessionReplay.enabled')) {
+  if (promptOptions === undefined && Preferences.get('sessionReplay.enabled')) {
     Performance.mark(PerformanceMarkerType.WillLoadSessionReplay)
     await SessionReplay.startRecording()
     Performance.mark(PerformanceMarkerType.DidLoadSessionReplay)
@@ -159,9 +159,9 @@ export const startup = async () => {
   await Workspace.hydrate(initData.Location)
   Performance.mark(PerformanceMarkerType.DidOpenWorkspace)
 
-  if (prompt !== undefined) {
+  if (promptOptions !== undefined) {
     HeadlessLayout.initialize()
-    await PromptMode.run(prompt)
+    await PromptMode.run(promptOptions)
     return
   }
 
