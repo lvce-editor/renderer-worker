@@ -7,6 +7,7 @@ import * as FileSystemMap from '../FileSystemMap/FileSystemMap.js'
 import * as FileSystemState from '../FileSystemState/FileSystemState.js'
 import * as Focus from '../Focus/Focus.js'
 import * as GetStartupOpenUri from '../GetStartupOpenUri/GetStartupOpenUri.js'
+import * as HeadlessLayout from '../HeadlessLayout/HeadlessLayout.js'
 import * as IconTheme from '../IconTheme/IconTheme.js'
 import * as Id from '../Id/Id.js'
 import * as InitData from '../InitData/InitData.js'
@@ -159,6 +160,7 @@ export const startup = async () => {
   Performance.mark(PerformanceMarkerType.DidOpenWorkspace)
 
   if (prompt !== undefined) {
+    HeadlessLayout.initialize()
     await PromptMode.run(prompt)
     return
   }
