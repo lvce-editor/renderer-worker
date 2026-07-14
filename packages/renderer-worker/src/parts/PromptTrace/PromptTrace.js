@@ -5,9 +5,16 @@ const join = (separator, left, right) => {
   return left.endsWith(separator) ? `${left}${right}` : `${left}${separator}${right}`
 }
 
+const toFileUri = (path) => {
+  const normalizedPath = path.replaceAll('\\', '/')
+  const url = new URL('file://')
+  url.pathname = normalizedPath.startsWith('/') ? normalizedPath : `/${normalizedPath}`
+  return url.href
+}
+
 export const create = ({ error, fileSystemAccess, finishedAt, id, prompt, result, startedAt }) => {
   return {
-    cwd: Workspace.getPath(),
+    cwd: toFileUri(Workspace.getPath()),
     ...(error && { error }),
     finishedAt,
     id,
@@ -28,7 +35,7 @@ export const createId = () => {
 }
 
 export const write = async (trace) => {
-  const separator = await FileSystemDisk.getPathSeparator()
+  const separator = '/'
   const directory = join(separator, trace.cwd, '.agent-logs')
   const path = join(separator, directory, `trace-${trace.id}.json`)
   await FileSystemDisk.mkdir(directory)
