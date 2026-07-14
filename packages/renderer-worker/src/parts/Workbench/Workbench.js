@@ -232,8 +232,6 @@ export const startup = async () => {
   await RecentlyOpened.hydrate()
   Performance.mark(PerformanceMarkerType.DidLoadRecentlyOpened)
 
-  // TODO tree shake out service worker in electron build
-
   Performance.mark(PerformanceMarkerType.WillLoadLocation)
   await Location.hydrate()
   Performance.mark(PerformanceMarkerType.DidLoadLocation)

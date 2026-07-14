@@ -280,10 +280,6 @@ export const getQuickPickMenuEntries = () => {
       label: 'Audio: Play Bell',
     },
     {
-      id: 'serviceWorker.uninstall',
-      label: 'Service Worker: Uninstall',
-    },
-    {
       id: 'Developer.openLogsFolder',
       label: 'Developer: Open Logs Folder',
     },
