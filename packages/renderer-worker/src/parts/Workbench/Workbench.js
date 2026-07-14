@@ -22,6 +22,7 @@ import * as PerformanceMarkerType from '../PerformanceMarkerType/PerformanceMark
 import * as Platform from '../Platform/Platform.js'
 import * as PlatformType from '../PlatformType/PlatformType.js'
 import * as Preferences from '../Preferences/Preferences.js'
+import * as PromptMode from '../PromptMode/PromptMode.js'
 import * as RecentlyOpened from '../RecentlyOpened/RecentlyOpened.js'
 import * as RendererProcess from '../RendererProcess/RendererProcess.js'
 import * as SaveState from '../SaveState/SaveState.js'
@@ -125,6 +126,8 @@ export const startup = async () => {
 
   IpcState.setConfig(initData.Config?.shouldLaunchMultipleWorkers)
 
+  const prompt = Platform.platform === PlatformType.Electron ? await PromptMode.getPrompt() : undefined
+
   if (initData.Location.href.includes('?replayId')) {
     const url = new URL(initData.Location.href)
     const replayId = url.searchParams.get('replayId')
@@ -143,7 +146,7 @@ export const startup = async () => {
   Performance.mark(PerformanceMarkerType.DidLoadPreferences)
 
   // TODO only load this if session replay is enabled in preferences
-  if (Preferences.get('sessionReplay.enabled')) {
+  if (prompt === undefined && Preferences.get('sessionReplay.enabled')) {
     Performance.mark(PerformanceMarkerType.WillLoadSessionReplay)
     await SessionReplay.startRecording()
     Performance.mark(PerformanceMarkerType.DidLoadSessionReplay)
@@ -154,6 +157,11 @@ export const startup = async () => {
   Performance.mark(PerformanceMarkerType.WillOpenWorkspace)
   await Workspace.hydrate(initData.Location)
   Performance.mark(PerformanceMarkerType.DidOpenWorkspace)
+
+  if (prompt !== undefined) {
+    await PromptMode.run(prompt)
+    return
+  }
 
   await Focus.hydrate()
 
