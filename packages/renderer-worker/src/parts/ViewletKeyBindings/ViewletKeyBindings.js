@@ -7,6 +7,7 @@ import * as KeyBindingsViewWorker from '../KeyBindingsViewWorker/KeyBindingsView
 // TODO make this an extension that can create virtual dom in a webworker
 
 export const create = (id, uri, x, y, width, height) => {
+  KeyBindingsViewWorker.acquire()
   return {
     x,
     y,
@@ -14,6 +15,10 @@ export const create = (id, uri, x, y, width, height) => {
     height,
     uid: id,
   }
+}
+
+export const dispose = () => {
+  return KeyBindingsViewWorker.release()
 }
 
 export const saveState = (state) => {

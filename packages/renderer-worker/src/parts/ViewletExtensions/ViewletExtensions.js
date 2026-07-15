@@ -10,6 +10,7 @@ export const saveState = async (state) => {
 }
 
 export const create = (id, uri, x, y, width, height, _args, parentUid) => {
+  ExtensionSearchViewWorker.acquire()
   return {
     id,
     uid: id,
@@ -47,7 +48,9 @@ export const loadContent = async (state, savedState) => {
   }
 }
 
-export const dispose = () => {}
+export const dispose = () => {
+  return ExtensionSearchViewWorker.release()
+}
 
 // TODO lazyload this
 
