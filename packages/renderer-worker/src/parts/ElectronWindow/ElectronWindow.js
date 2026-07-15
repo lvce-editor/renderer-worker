@@ -24,6 +24,8 @@ export const openNewWithUri = forward('ElectronWindow.openNewWithUri')
 
 export const toggleDevtools = forward('ElectronWindow.toggleDevtools')
 
+export const toggleFullScreen = forward('ElectronWindow.toggleFullScreen')
+
 export const zoomIn = forward('ElectronWindow.zoomIn')
 
 export const zoomOut = forward('ElectronWindow.zoomOut')
