@@ -7,6 +7,7 @@ const ids = [
   'applyEdit',
   'braceCompletion',
   'cancelSelection',
+  'closeColorPicker',
   'closeCodeGenerator',
   'closeCompletion',
   'closeCompletion',
