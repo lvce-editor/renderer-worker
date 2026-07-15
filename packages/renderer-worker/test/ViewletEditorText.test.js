@@ -12,7 +12,36 @@ jest.unstable_mockModule('../src/parts/MeasureTextWidth/MeasureTextWidth.js', ()
   }
 })
 
+jest.unstable_mockModule('../src/parts/EditorWorker/EditorWorker.ts', () => ({
+  invoke: jest.fn(),
+}))
+
+jest.unstable_mockModule('../src/parts/RendererProcess/RendererProcess.js', () => ({
+  invoke: jest.fn(),
+}))
+
+jest.unstable_mockModule('../src/parts/Tokenizer/Tokenizer.js', () => ({
+  getTokenizer: jest.fn(),
+  removeConnectedEditor: jest.fn(),
+}))
+
+const EditorWorker = await import('../src/parts/EditorWorker/EditorWorker.ts')
+const RendererProcess = await import('../src/parts/RendererProcess/RendererProcess.js')
+const Tokenizer = await import('../src/parts/Tokenizer/Tokenizer.js')
 const ViewletEditorText = await import('../src/parts/ViewletEditorText/ViewletEditorText.js')
+
+test('dispose', async () => {
+  const commands = [['Viewlet.dispose', 2]]
+  // @ts-ignore
+  EditorWorker.invoke.mockResolvedValue(commands)
+
+  await ViewletEditorText.dispose({ id: 1 })
+
+  expect(Tokenizer.removeConnectedEditor).toHaveBeenCalledWith(1)
+  // @ts-ignore
+  expect(EditorWorker.invoke).toHaveBeenCalledWith('Editor.dispose', 1)
+  expect(RendererProcess.invoke).toHaveBeenCalledWith('Viewlet.sendMultiple', commands)
+})
 
 test('resize - increase height', () => {
   const state = {
