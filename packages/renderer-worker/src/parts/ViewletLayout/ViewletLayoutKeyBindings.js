@@ -222,5 +222,155 @@ export const getKeyBindings = () => {
       command: 'Run And Debug.handleEvaluate',
       when: WhenExpression.FocusDebugInput,
     },
+    {
+      key: KeyCode.F11,
+      command: 'Window.toggleFullScreen',
+    },
+    {
+      key: KeyModifier.CtrlCmd | KeyCode.KeyN,
+      command: 'Main.newFile',
+    },
+    {
+      key: KeyModifier.CtrlCmd | KeyModifier.Shift | KeyCode.KeyN,
+      command: 'Window.openNew',
+    },
+    {
+      key: KeyModifier.CtrlCmd | KeyCode.KeyO,
+      command: 'Dialog.openFile',
+    },
+    {
+      key: KeyModifier.CtrlCmd | KeyCode.KeyS,
+      command: 'Main.save',
+    },
+    {
+      key: KeyModifier.CtrlCmd | KeyCode.KeyZ,
+      command: 'Editor.undo',
+      when: WhenExpression.FocusEditorText,
+    },
+    {
+      key: KeyModifier.CtrlCmd | KeyCode.KeyY,
+      command: 'Editor.redo',
+      when: WhenExpression.FocusEditorText,
+    },
+    {
+      key: KeyModifier.CtrlCmd | KeyCode.KeyX,
+      command: 'Editor.cut',
+      when: WhenExpression.FocusEditorText,
+    },
+    {
+      key: KeyModifier.CtrlCmd | KeyCode.KeyC,
+      command: 'Editor.copy',
+      when: WhenExpression.FocusEditorText,
+    },
+    {
+      key: KeyModifier.CtrlCmd | KeyCode.KeyV,
+      command: 'Editor.paste',
+      when: WhenExpression.FocusEditorText,
+    },
+    {
+      key: KeyModifier.CtrlCmd | KeyCode.Slash,
+      command: 'Editor.toggleLineComment',
+      when: WhenExpression.FocusEditorText,
+    },
+    {
+      key: KeyModifier.CtrlCmd | KeyCode.KeyA,
+      command: 'Editor.selectAll',
+      when: WhenExpression.FocusEditorText,
+    },
+    {
+      key: KeyModifier.CtrlCmd | KeyModifier.Shift | KeyCode.KeyD,
+      command: 'Editor.copyLineDown',
+      when: WhenExpression.FocusEditorText,
+    },
+    {
+      key: KeyModifier.CtrlCmd | KeyModifier.Shift | KeyCode.UpArrow,
+      command: 'Editor.moveLineUp',
+      when: WhenExpression.FocusEditorText,
+    },
+    {
+      key: KeyModifier.CtrlCmd | KeyModifier.Shift | KeyCode.DownArrow,
+      command: 'Editor.moveLineDown',
+      when: WhenExpression.FocusEditorText,
+    },
+    {
+      key: KeyModifier.Alt | KeyModifier.Shift | KeyCode.UpArrow,
+      command: 'Editor.addCursorAbove',
+      when: WhenExpression.FocusEditorText,
+    },
+    {
+      key: KeyModifier.Alt | KeyModifier.Shift | KeyCode.DownArrow,
+      command: 'Editor.addCursorBelow',
+      when: WhenExpression.FocusEditorText,
+    },
+    {
+      key: KeyModifier.Alt | KeyCode.F3,
+      command: 'Editor.selectAllOccurrences',
+      when: WhenExpression.FocusEditorText,
+    },
+    {
+      key: KeyModifier.CtrlCmd | KeyModifier.Shift | KeyCode.KeyP,
+      command: 'Command.openCommandPalette',
+    },
+    {
+      key: KeyModifier.CtrlCmd | KeyModifier.Shift | KeyCode.KeyE,
+      command: 'Explorer.focus',
+    },
+    {
+      key: KeyModifier.CtrlCmd | KeyModifier.Shift | KeyCode.KeyF,
+      command: 'Search.focus',
+    },
+    {
+      key: KeyModifier.CtrlCmd | KeyModifier.Shift | KeyCode.KeyG,
+      command: 'SourceControl.focus',
+    },
+    {
+      key: KeyModifier.CtrlCmd | KeyModifier.Shift | KeyCode.KeyD,
+      command: 'Run.focus',
+    },
+    {
+      key: KeyModifier.CtrlCmd | KeyModifier.Shift | KeyCode.KeyX,
+      command: 'Extensions.focus',
+    },
+    {
+      key: KeyModifier.CtrlCmd | KeyModifier.Shift | KeyCode.KeyM,
+      command: 'Problems.toggle',
+    },
+    {
+      key: KeyModifier.CtrlCmd | KeyModifier.Shift | KeyCode.KeyU,
+      command: 'Output.toggle',
+    },
+    {
+      key: KeyModifier.CtrlCmd | KeyCode.KeyJ,
+      command: 'Layout.togglePanel',
+    },
+    {
+      key: KeyModifier.CtrlCmd | KeyModifier.Alt | KeyCode.KeyB,
+      command: 'Layout.toggleSecondarySideBar',
+    },
+    {
+      key: KeyModifier.CtrlCmd | KeyCode.Numpad0,
+      command: 'Window.zoomReset',
+    },
+    {
+      key: KeyModifier.CtrlCmd | KeyCode.Backslash,
+      command: 'MainArea.splitRight',
+    },
+    {
+      key: KeyModifier.Alt | KeyModifier.Shift | KeyCode.Digit8,
+      command: 'MainArea.flipEditorLayout',
+    },
+    {
+      key: KeyModifier.CtrlCmd | KeyCode.KeyP,
+      command: 'QuickPick.showFile',
+    },
+    {
+      args: ['workspace-symbol'],
+      key: KeyModifier.CtrlCmd | KeyCode.KeyT,
+      command: 'QuickPick.show',
+    },
+    {
+      key: KeyModifier.CtrlCmd | KeyModifier.Shift | KeyCode.KeyP,
+      command: 'QuickPick.showCommands',
+    },
   ]
 }

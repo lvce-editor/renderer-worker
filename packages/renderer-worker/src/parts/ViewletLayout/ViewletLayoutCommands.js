@@ -1,7 +1,10 @@
+import * as GetKeyBindingsForCommands from '../GetKeyBindingsForCommands/GetKeyBindingsForCommands.js'
 import * as ViewletLayout from './ViewletLayout.js'
 
 // prettier-ignore
-export const Commands = {}
+export const Commands = {
+  getKeyBindings: GetKeyBindingsForCommands.getKeyBindingsForCommands,
+}
 
 export const CommandsWithSideEffects = {
   handleSashPointerDown: ViewletLayout.handleSashPointerDown,
