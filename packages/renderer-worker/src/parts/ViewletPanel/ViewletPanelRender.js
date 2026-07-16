@@ -1,15 +1,34 @@
-import * as GetPanelTabsVirtualDom from '../GetPanelTabsVirtualDom/GetPanelTabsVirtualDom.js'
+import * as AdjustCommands from '../AdjustCommands/AdjustCommands.js'
+import * as PanelWorker from '../PanelWorker/PanelWorker.js'
 
 export const hasFunctionalRender = true
 
-const renderTabs = {
+export const hasFunctionalRootRender = true
+
+export const hasFunctionalEvents = true
+
+const renderItems = {
   isEqual(oldState, newState) {
-    return oldState.views === newState.views && oldState.selectedIndex === newState.selectedIndex && oldState.badgeCounts === newState.badgeCounts
+    return JSON.stringify(oldState.commands) === JSON.stringify(newState.commands)
   },
-  apply(oldState, newState) {
-    const dom = GetPanelTabsVirtualDom.getPanelTabsVirtualDom(newState.views, newState.selectedIndex, newState.badgeCounts)
-    return [/* method */ 'setTabsDom', /* tabs */ dom]
-  },
+  apply: AdjustCommands.apply,
+  multiple: true,
 }
 
-export const render = [renderTabs]
+export const render = [renderItems]
+
+export const renderEventListeners = () => {
+  return PanelWorker.invoke('Panel.renderEventListeners')
+}
+
+export const hasFunctionalResize = true
+
+export const resize = async (state, dimensions) => {
+  await PanelWorker.invoke('Panel.resize', state.uid, dimensions)
+  const diffResult = await PanelWorker.invoke('Panel.diff2', state.uid)
+  const commands = await PanelWorker.invoke('Panel.render2', state.uid, diffResult)
+  return {
+    ...state,
+    commands,
+  }
+}

@@ -47,4 +47,6 @@ export const CommandsWithSideEffects = {
   handleBlur: ViewletLayout.handleBlur,
   handleFocus: ViewletLayout.handleFocus,
   showE2eTests: ViewletLayout.showE2eTests,
+  createViewlet: ViewletLayout.createViewlet,
+  createPanelViewlet: ViewletLayout.createPanelViewlet,
 }

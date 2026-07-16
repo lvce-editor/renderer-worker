@@ -1,8 +1,14 @@
-import * as ViewletPanel from '../ViewletPanel/ViewletPanel.js'
+import * as PanelWorker from '../PanelWorker/PanelWorker.js'
+import * as WrapPanelCommand from '../WrapPanelCommand/WrapPanelCommand.js'
+import * as ViewletPanel from './ViewletPanel.js'
 
-export const Commands = {
-  selectIndex: ViewletPanel.selectIndex,
-  hidePanel: ViewletPanel.hidePanel,
-  handleClickAction: ViewletPanel.handleClickAction,
-  handleFilterInput: ViewletPanel.handleFilterInput,
+export const Commands = {}
+
+export const getCommands = async () => {
+  const commands = await PanelWorker.invoke('Panel.getCommandIds')
+  for (const command of commands) {
+    Commands[command] = WrapPanelCommand.wrapPanelCommand(command)
+  }
+  Commands.hotReload = ViewletPanel.hotReload
+  return Commands
 }
