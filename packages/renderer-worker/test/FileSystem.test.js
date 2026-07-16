@@ -8,7 +8,6 @@ import * as FileSystemState from '../src/parts/FileSystemState/FileSystemState.j
 const readFile = jest.fn()
 const writeFile = jest.fn()
 const remove = jest.fn()
-const exists = jest.fn()
 const handleWorkspaceRefresh = jest.fn()
 
 FileSystemState.registerAll({
@@ -17,7 +16,6 @@ FileSystemState.registerAll({
       readFile,
       writeFile,
       remove,
-      exists,
     }
   },
 })
@@ -46,14 +44,7 @@ test('removeFile', async () => {
   await FileSystem.remove('test://some-file.txt')
   expect(remove).toHaveBeenCalledTimes(1)
   expect(remove).toHaveBeenCalledWith('some-file.txt')
-  expect(handleWorkspaceRefresh).toHaveBeenCalledTimes(1)
-})
-
-test('exists', async () => {
-  exists.mockReturnValue(true)
-
-  await expect(FileSystem.exists('test://some-file.txt')).resolves.toBe(true)
-  expect(exists).toHaveBeenCalledWith('some-file.txt')
+  expect(handleWorkspaceRefresh).toHaveBeenCalledWith(['test://some-file.txt'])
 })
 
 test.skip('removeFile - error', async () => {

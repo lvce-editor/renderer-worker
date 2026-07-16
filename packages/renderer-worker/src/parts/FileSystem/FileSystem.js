@@ -4,8 +4,8 @@ import * as EncodingType from '../EncodingType/EncodingType.js'
 import * as GetFileSystem from '../GetFileSystem/GetFileSystem.js'
 import * as GetProtocol from '../GetProtocol/GetProtocol.js'
 
-const notifyWorkspaceChanged = async () => {
-  await Command.execute('Layout.handleWorkspaceRefresh')
+const notifyWorkspaceChanged = async (deletedUris = []) => {
+  await Command.execute('Layout.handleWorkspaceRefresh', deletedUris)
 }
 
 export const readFile = async (uri, encoding = EncodingType.Utf8) => {
@@ -27,7 +27,7 @@ export const remove = async (uri) => {
   const path = GetProtocol.getPath(protocol, uri)
   const fileSystem = await GetFileSystem.getFileSystem(protocol)
   await fileSystem.remove(path)
-  await notifyWorkspaceChanged()
+  await notifyWorkspaceChanged([uri])
 }
 
 export const rename = async (oldUri, newUri) => {
@@ -123,25 +123,6 @@ export const stat = async (uri) => {
   const path = GetProtocol.getPath(protocol, uri)
   const fileSystem = await GetFileSystem.getFileSystem(protocol)
   return fileSystem.stat(path)
-}
-
-export const exists = async (uri) => {
-  const protocol = GetProtocol.getProtocol(uri)
-  const path = GetProtocol.getPath(protocol, uri)
-  const fileSystem = await GetFileSystem.getFileSystem(protocol)
-  if (fileSystem.exists) {
-    return fileSystem.exists(path)
-  }
-  try {
-    if (fileSystem.stat) {
-      await fileSystem.stat(path)
-    } else {
-      await fileSystem.readFile(path)
-    }
-    return true
-  } catch {
-    return false
-  }
 }
 
 export const getFolderSize = async (uri) => {
