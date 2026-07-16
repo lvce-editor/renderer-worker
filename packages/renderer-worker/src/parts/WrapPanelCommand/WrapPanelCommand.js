@@ -1,6 +1,6 @@
 import * as PanelWorker from '../PanelWorker/PanelWorker.js'
 
-export const wrapPanelCommand = (key: string) => {
+export const wrapPanelCommand = (key) => {
   return async (state, ...args) => {
     await PanelWorker.invoke(`Panel.${key}`, state.uid, ...args)
     const diffResult = await PanelWorker.invoke('Panel.diff2', state.uid)

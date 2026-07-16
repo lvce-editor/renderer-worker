@@ -1,5 +1,5 @@
 import * as PanelWorker from '../PanelWorker/PanelWorker.js'
-import * as WrapPanelCommand from '../WrapPanelCommand/WrapPanelCommand.ts'
+import * as WrapPanelCommand from '../WrapPanelCommand/WrapPanelCommand.js'
 import * as ViewletPanel from './ViewletPanel.js'
 
 export const Commands = {}
