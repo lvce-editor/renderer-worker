@@ -1,3 +1,4 @@
+import * as EditorWorker from '../EditorWorker/EditorWorker.ts'
 import * as RendererProcess from '../RendererProcess/RendererProcess.js'
 import * as WrapEditorCommands from '../WrapEditorCommands/WrapEditorCommands.js'
 
@@ -182,7 +183,6 @@ const ids = [
   'setDecorations',
   'setDelta',
   'setDeltaY',
-  'setLanguageId',
   'setSelections',
   'showHover',
   'showHover2',
@@ -202,6 +202,16 @@ const ids = [
 export const Commands = {
   // TODO command to set cursor position
   ...WrapEditorCommands.wrapEditorCommands(ids),
+
+  async setLanguageId(state, languageId, tokenizePath) {
+    // @ts-ignore Editor worker types are updated after the editor worker release.
+    const newState = await EditorWorker.invoke('Editor.setLanguageId', state.uid, languageId, tokenizePath)
+    const commands = await EditorWorker.invoke('Editor.render', state.id)
+    return {
+      ...newState,
+      commands,
+    }
+  },
 
   // TODO
   async showOverlayMessage(state, editor, ...args) {
