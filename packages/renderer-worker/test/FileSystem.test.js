@@ -1,4 +1,5 @@
 import { beforeEach, expect, jest, test } from '@jest/globals'
+import * as Command from '../src/parts/Command/Command.js'
 import * as DirentType from '../src/parts/DirentType/DirentType.js'
 import * as EncodingType from '../src/parts/EncodingType/EncodingType.js'
 import * as FileSystem from '../src/parts/FileSystem/FileSystem.js'
@@ -7,6 +8,8 @@ import * as FileSystemState from '../src/parts/FileSystemState/FileSystemState.j
 const readFile = jest.fn()
 const writeFile = jest.fn()
 const remove = jest.fn()
+const exists = jest.fn()
+const handleWorkspaceRefresh = jest.fn()
 
 FileSystemState.registerAll({
   test() {
@@ -14,12 +17,15 @@ FileSystemState.registerAll({
       readFile,
       writeFile,
       remove,
+      exists,
     }
   },
 })
 
 beforeEach(() => {
   jest.resetAllMocks()
+  Command.state.commands = Object.create(null)
+  Command.register('Layout.handleWorkspaceRefresh', handleWorkspaceRefresh)
 })
 
 test.skip('readFile', async () => {
@@ -40,6 +46,14 @@ test('removeFile', async () => {
   await FileSystem.remove('test://some-file.txt')
   expect(remove).toHaveBeenCalledTimes(1)
   expect(remove).toHaveBeenCalledWith('some-file.txt')
+  expect(handleWorkspaceRefresh).toHaveBeenCalledTimes(1)
+})
+
+test('exists', async () => {
+  exists.mockReturnValue(true)
+
+  await expect(FileSystem.exists('test://some-file.txt')).resolves.toBe(true)
+  expect(exists).toHaveBeenCalledWith('some-file.txt')
 })
 
 test.skip('removeFile - error', async () => {

@@ -222,6 +222,43 @@ export const saveState = (state) => {
   }
 }
 
+const callGlobalEvent = async (state, eventName, ...args) => {
+  const instances = Object.values(ViewletStates.getAllInstances()).filter((instance) => {
+    return instance.factory.Commands && instance.factory.Commands[eventName]
+  })
+  const results = await Promise.all(
+    instances.map(async (instance) => {
+      const oldState = instance.state
+      const newState = await instance.factory.Commands[eventName](oldState, ...args)
+      return {
+        instance,
+        newState,
+        oldState,
+      }
+    }),
+  )
+  const commands = []
+  for (const { instance, newState, oldState } of results) {
+    if (oldState !== newState) {
+      const uid = instance.uid || instance.state.uid
+      Assert.number(uid)
+      commands.push(...ViewletManager.render(instance.factory, instance.renderedState, newState, uid, newState.parentUid))
+      instance.state = newState
+      instance.renderedState = newState
+    }
+  }
+  return {
+    commands,
+    newState: {
+      ...state,
+    },
+  }
+}
+
+export const handleWorkspaceRefresh = async (state) => {
+  return callGlobalEvent(state, 'handleWorkspaceRefresh')
+}
+
 const getSideBarLocationType = () => {
   const location = Preferences.get('workbench.sideBarLocation')
   switch (location) {
