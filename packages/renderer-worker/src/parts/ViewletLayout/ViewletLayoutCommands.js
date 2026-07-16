@@ -7,6 +7,7 @@ export const Commands = {
 }
 
 export const CommandsWithSideEffects = {
+  handleWorkspaceRefresh: ViewletLayout.handleWorkspaceRefresh,
   handleSashPointerDown: ViewletLayout.handleSashPointerDown,
   handleSashPointerUp: ViewletLayout.handleSashPointerUp,
   handleResize: ViewletLayout.handleResize,

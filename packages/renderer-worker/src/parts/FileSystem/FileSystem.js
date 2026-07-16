@@ -1,7 +1,12 @@
 import * as Assert from '../Assert/Assert.ts'
+import * as Command from '../Command/Command.js'
 import * as EncodingType from '../EncodingType/EncodingType.js'
 import * as GetFileSystem from '../GetFileSystem/GetFileSystem.js'
 import * as GetProtocol from '../GetProtocol/GetProtocol.js'
+
+const notifyWorkspaceChanged = async () => {
+  await Command.execute('Layout.handleWorkspaceRefresh')
+}
 
 export const readFile = async (uri, encoding = EncodingType.Utf8) => {
   const protocol = GetProtocol.getProtocol(uri)
@@ -22,6 +27,7 @@ export const remove = async (uri) => {
   const path = GetProtocol.getPath(protocol, uri)
   const fileSystem = await GetFileSystem.getFileSystem(protocol)
   await fileSystem.remove(path)
+  await notifyWorkspaceChanged()
 }
 
 export const rename = async (oldUri, newUri) => {
@@ -30,6 +36,7 @@ export const rename = async (oldUri, newUri) => {
   const newPath = GetProtocol.getPath(protocol, newUri)
   const fileSystem = await GetFileSystem.getFileSystem(protocol)
   await fileSystem.rename(oldPath, newPath)
+  await notifyWorkspaceChanged()
 }
 
 export const mkdir = async (uri) => {
@@ -44,6 +51,7 @@ export const writeFile = async (uri, content, encoding = EncodingType.Utf8) => {
   const path = GetProtocol.getPath(protocol, uri)
   const fileSystem = await GetFileSystem.getFileSystem(protocol)
   await fileSystem.writeFile(path, content, encoding)
+  await notifyWorkspaceChanged()
 }
 
 export const createFile = (uri) => {
@@ -115,6 +123,25 @@ export const stat = async (uri) => {
   const path = GetProtocol.getPath(protocol, uri)
   const fileSystem = await GetFileSystem.getFileSystem(protocol)
   return fileSystem.stat(path)
+}
+
+export const exists = async (uri) => {
+  const protocol = GetProtocol.getProtocol(uri)
+  const path = GetProtocol.getPath(protocol, uri)
+  const fileSystem = await GetFileSystem.getFileSystem(protocol)
+  if (fileSystem.exists) {
+    return fileSystem.exists(path)
+  }
+  try {
+    if (fileSystem.stat) {
+      await fileSystem.stat(path)
+    } else {
+      await fileSystem.readFile(path)
+    }
+    return true
+  } catch {
+    return false
+  }
 }
 
 export const getFolderSize = async (uri) => {
