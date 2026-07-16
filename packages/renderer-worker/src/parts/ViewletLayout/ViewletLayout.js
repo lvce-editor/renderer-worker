@@ -5,6 +5,7 @@ import * as GetDefaultTitleBarHeight from '../GetDefaultTitleBarHeight/GetDefaul
 import * as Id from '../Id/Id.js'
 import * as LayoutKeys from '../LayoutKeys/LayoutKeys.js'
 import * as LayoutModules from '../LayoutModules/LayoutModules.js'
+import * as PanelWorker from '../PanelWorker/PanelWorker.js'
 import * as Platform from '../Platform/Platform.js'
 import * as PlatformType from '../PlatformType/PlatformType.js'
 import * as Preferences from '../Preferences/Preferences.js'
@@ -375,8 +376,38 @@ export const toggleSideBar = (state) => {
   return toggle(state, LayoutModules.SideBar)
 }
 
-export const showPanel = (state) => {
-  return show(state, LayoutModules.Panel)
+const getPanelViewChangeCommands = async (moduleId) => {
+  if (!moduleId) {
+    return []
+  }
+  const instance = ViewletStates.getInstance(LayoutModules.Panel.moduleId)
+  if (!instance) {
+    return []
+  }
+  const panelUid = instance.state.uid
+  await PanelWorker.invoke('Panel.toggleView', panelUid, moduleId)
+  const diffResult = await PanelWorker.invoke('Panel.diff2', panelUid)
+  if (diffResult.length === 0) {
+    return []
+  }
+  return PanelWorker.invoke('Panel.render2', panelUid, diffResult)
+}
+
+export const showPanel = async (state, moduleId = ViewletModuleId.None) => {
+  const { points } = state
+  if (points[LayoutKeys.PanelVisible]) {
+    const commands = await getPanelViewChangeCommands(moduleId)
+    return {
+      newState: state,
+      commands,
+    }
+  }
+  const result = await show(state, LayoutModules.Panel)
+  const panelViewCommands = await getPanelViewChangeCommands(moduleId)
+  return {
+    newState: result.newState,
+    commands: [...result.commands, ...panelViewCommands],
+  }
 }
 
 export const hidePanel = (state) => {
@@ -384,7 +415,11 @@ export const hidePanel = (state) => {
 }
 
 export const togglePanel = (state, moduleId = ViewletModuleId.None) => {
-  return toggle(state, LayoutModules.Panel, moduleId)
+  const { points } = state
+  if (points[LayoutKeys.PanelVisible]) {
+    return hidePanel(state)
+  }
+  return showPanel(state, moduleId)
 }
 
 export const showActivityBar = (state) => {
@@ -433,6 +468,77 @@ export const hideTitleBar = (state) => {
 
 export const toggleTitleBar = (state) => {
   return toggle(state, LayoutModules.TitleBar)
+}
+
+export const createViewlet = async (state, viewletModuleId, editorUid, tabId, bounds, uri) => {
+  const commands = await ViewletManager.load(
+    {
+      getModule: ViewletModule.load,
+      id: viewletModuleId,
+      type: 0,
+      // @ts-ignore
+      uri,
+      uid: editorUid,
+      show: false,
+      focus: false,
+      setBounds: false,
+      x: bounds.x,
+      y: bounds.y,
+      width: bounds.width,
+      height: bounds.height,
+      parentUid: -1,
+      append: false,
+      args: [],
+    },
+    false,
+    true,
+  )
+  return {
+    newState: state,
+    commands,
+  }
+}
+
+export const createPanelViewlet = async (state, viewletModuleId, editorUid, tabId, actionsUid, bounds, uri) => {
+  const commands = await ViewletManager.load(
+    {
+      getModule: ViewletModule.load,
+      id: viewletModuleId,
+      type: 0,
+      // @ts-ignore
+      uri,
+      uid: editorUid,
+      show: false,
+      focus: false,
+      setBounds: false,
+      x: bounds.x,
+      y: bounds.y,
+      width: bounds.width,
+      height: bounds.height,
+      parentUid: -1,
+      append: false,
+      args: [],
+    },
+    false,
+    true,
+  )
+  const actionsDomIndex = commands.findIndex((command) => command[0] === 'Viewlet.send' && command[2] === 'setActionsDom')
+  const actionsDom = actionsDomIndex === -1 ? [] : commands[actionsDomIndex][3]
+  if (actionsDomIndex !== -1) {
+    commands.splice(actionsDomIndex, 1)
+  }
+  const eventsIndex = commands.findIndex((command) => command[0] === 'Viewlet.registerEventListeners')
+  const events = eventsIndex === -1 ? [] : commands[eventsIndex][2]
+  commands.push(
+    ['Viewlet.createFunctionalRoot', viewletModuleId, actionsUid, true],
+    ['Viewlet.registerEventListeners', actionsUid, events],
+    ['Viewlet.setDom2', actionsUid, actionsDom],
+    ['Viewlet.setUid', actionsUid, editorUid],
+  )
+  return {
+    newState: state,
+    commands,
+  }
 }
 
 export const showMain = (state) => {
