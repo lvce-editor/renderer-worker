@@ -254,8 +254,8 @@ const callGlobalEvent = async (state, eventName, ...args) => {
   }
 }
 
-export const handleWorkspaceRefresh = async (state) => {
-  return callGlobalEvent(state, 'handleWorkspaceRefresh')
+export const handleWorkspaceRefresh = async (state, deletedUris = []) => {
+  return callGlobalEvent(state, 'handleWorkspaceRefresh', deletedUris)
 }
 
 const getSideBarLocationType = () => {
