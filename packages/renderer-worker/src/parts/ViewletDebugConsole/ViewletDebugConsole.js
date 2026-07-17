@@ -33,6 +33,7 @@ export const evaluate = async (state) => {
   const result = await DebugConsoleModel.evaluate(inputValue)
   return {
     ...state,
+    inputValue: '',
     text: `${state.text}\n${result}`,
   }
 }
