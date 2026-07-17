@@ -84,6 +84,7 @@ const ids = [
   'EditorSourceActions.focusPrevious',
   'EditorSourceActions.selectCurrent',
   'findAllReferences',
+  'fold',
   'FindWidget.close',
   'FindWidget.focusCloseButton',
   'FindWidget.focusFind',
@@ -196,6 +197,7 @@ const ids = [
   'toggleLineComment',
   'type',
   'undo',
+  'unfold',
   'unIndent',
 ]
 

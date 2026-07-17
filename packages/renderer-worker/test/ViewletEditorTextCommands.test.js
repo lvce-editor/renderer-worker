@@ -18,6 +18,20 @@ test('closeColorPicker', async () => {
   expect(EditorWorker.invoke).toHaveBeenCalledWith('Editor.closeColorPicker', 42)
 })
 
+test('fold', async () => {
+  const editor = { uid: 42 }
+  await ViewletEditorTextCommands.Commands.fold(editor)
+  // @ts-ignore Editor worker types are updated after the editor worker release.
+  expect(EditorWorker.invoke).toHaveBeenCalledWith('Editor.fold', 42)
+})
+
+test('unfold', async () => {
+  const editor = { uid: 42 }
+  await ViewletEditorTextCommands.Commands.unfold(editor)
+  // @ts-ignore Editor worker types are updated after the editor worker release.
+  expect(EditorWorker.invoke).toHaveBeenCalledWith('Editor.unfold', 42)
+})
+
 test('setLanguageId renders the updated syntax highlighting', async () => {
   const editor = { id: 42, uid: 42 }
   const newState = { id: 42, languageId: 'xyz', uid: 42 }
