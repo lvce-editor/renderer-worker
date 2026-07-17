@@ -3,7 +3,7 @@ import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEven
 import * as ClassNames from '../ClassNames/ClassNames.js'
 import { text } from '../VirtualDomHelpers/VirtualDomHelpers.js'
 
-export const getVirtualDom = (textContent) => {
+export const getVirtualDom = (textContent, inputValue) => {
   const dom = []
   dom.push(
     {
@@ -22,6 +22,7 @@ export const getVirtualDom = (textContent) => {
       className: ClassNames.InputBox,
       onInput: DomEventListenerFunctions.HandleInput,
       onFocus: DomEventListenerFunctions.HandleFocus,
+      value: inputValue,
       childCount: 0,
     },
   )

@@ -1,6 +1,7 @@
 import * as Debug from '../Debug/Debug.js'
 import * as ViewletModuleId from '../ViewletModuleId/ViewletModuleId.js'
 import * as ViewletStates from '../ViewletStates/ViewletStates.js'
+import * as ViewletDebugConsoleStrings from '../ViewletDebugConsole/ViewletDebugConsoleStrings.js'
 
 const formatResult = (result) => {
   if (!result) {
@@ -16,7 +17,7 @@ export const evaluate = async (inputValue) => {
   // TODO don't depend on other component state
   const debugState = ViewletStates.getState(ViewletModuleId.RunAndDebug)
   if (!debugState) {
-    return ''
+    return ViewletDebugConsoleStrings.noActiveDebugSession()
   }
   const { debugId, callFrameId } = debugState
   const result = await Debug.evaluate(debugId, inputValue, callFrameId)

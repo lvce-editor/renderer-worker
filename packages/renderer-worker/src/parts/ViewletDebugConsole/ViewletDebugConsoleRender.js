@@ -7,7 +7,7 @@ const renderText = {
     return oldState.text === newState.text
   },
   apply(oldState, newState) {
-    const dom = GetDebugConsoleVirtualDom.getVirtualDom(newState.text)
+    const dom = GetDebugConsoleVirtualDom.getVirtualDom(newState.text, newState.inputValue)
     return ['setDom', dom]
   },
 }
