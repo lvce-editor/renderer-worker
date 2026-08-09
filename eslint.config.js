@@ -1,6 +1,7 @@
+import { defineConfig } from 'eslint/config'
 import config from '@lvce-editor/eslint-config'
 
-export default [
+export default defineConfig([
   ...config,
   {
     rules: {
@@ -45,4 +46,4 @@ export default [
       'unicorn/prefer-top-level-await': 'off',
     },
   },
-]
+])
