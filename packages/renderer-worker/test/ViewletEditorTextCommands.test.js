@@ -32,6 +32,13 @@ test('unfold', async () => {
   expect(EditorWorker.invoke).toHaveBeenCalledWith('Editor.unfold', 42)
 })
 
+test('selectionShrink', async () => {
+  const editor = { uid: 42 }
+  await ViewletEditorTextCommands.Commands.selectionShrink(editor)
+  // @ts-ignore Editor worker types are updated after the editor worker release.
+  expect(EditorWorker.invoke).toHaveBeenCalledWith('Editor.selectionShrink', 42)
+})
+
 test('setLanguageId renders the updated syntax highlighting', async () => {
   const editor = { id: 42, uid: 42 }
   const newState = { id: 42, languageId: 'xyz', uid: 42 }

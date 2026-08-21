@@ -175,6 +175,7 @@ const ids = [
   'selectDown',
   'selectInsideString',
   'selectionGrow',
+  'selectionShrink',
   'selectLine',
   'selectNextOccurrence',
   'selectUp',
